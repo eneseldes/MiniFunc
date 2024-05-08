@@ -105,14 +105,14 @@ public class TestCases {
         System.out.println(e2 + " = " + e2.getValue());
         System.out.println(e3 + " = " + e3.getValue());
         System.out.println(e4 + " = " + e4.getValue());
-        //System.out.println(e1 + " + " + e2 + " = " + new Addition(e1, e2).execute());
-        //System.out.println(e1 + " + " + e3 + " = " + new Addition(e1, e3).execute());
-        //System.out.println(e1 + " + " + e4 + " = " + new Addition(e1, e4).execute());
-        //System.out.println(e2 + " - " + e3 + " = " + new Substraction(e2, e3).execute());
+        System.out.println(e1 + " + " + e2 + " = " + new Addition(e1, e2).execute());
+        System.out.println(e1 + " + " + e3 + " = " + new Addition(e1, e3).execute());
+        System.out.println(e1 + " + " + e4 + " = " + new Addition(e1, e4).execute());
+        System.out.println(e2 + " - " + e3 + " = " + new Substraction(e2, e3).execute());
         System.out.println(e2 + " * " + e3 + " = " + new Multipication(e2, e3).getValue());
-        //System.out.println(e2 + " / " + e5 + " = " + new Division(e2, e5).execute());
-        //System.out.println(e1 + " + (" + e2 + " / " + e5 + ") = " + new Addition(e1, new Division(e2, e5)).execute());
-        //System.out.println("-" + e3 + " = " + new Negation(e3).execute());
+        System.out.println(e2 + " / " + e5 + " = " + new Division(e2, e5).execute());
+        System.out.println(e1 + " + (" + e2 + " / " + e5 + ") = " + new Addition(e1, new Division(e2, e5)).execute());
+        System.out.println("-" + e3 + " = " + new Negation(e3).execute());
 
         System.out.println();
     }
@@ -134,12 +134,12 @@ public class TestCases {
         Expression b1 = new BooleanLiteral(true);
         Expression b2 = new BooleanVariable("b2", false);
         System.out.println(b2 + " = " + b2.getValue());
-        //System.out.println("not(" + b1 + ") = " + new NotExpression(b1).execute());		
-        //System.out.println(b1 + " and " + b2 + " = " + new AndExpression(b1, b2).getValue());
-        //System.out.println(b1 + " and not(" + b2 + ") = " + new AndExpression(b1, new NotExpression(b2)).getValue());
-        //System.out.println(b1 + " or " + b2 + " = " + new OrExpression(b1, b2).getValue());
-        //System.out.println(b1 + " xor " + b2 + " = " + new XorExpression(b1, b2).getValue());
-        //System.out.println(b1 + " xor not(" + b2 + ") = " + new XorExpression(b1, new NotExpression(b2)).getValue());
+        System.out.println("not(" + b1 + ") = " + new NotExpression(b1).execute());		
+        System.out.println(b1 + " and " + b2 + " = " + new AndExpression(b1, b2).getValue());
+        System.out.println(b1 + " and not(" + b2 + ") = " + new AndExpression(b1, new NotExpression(b2)).getValue());
+        System.out.println(b1 + " or " + b2 + " = " + new OrExpression(b1, b2).getValue());
+        System.out.println(b1 + " xor " + b2 + " = " + new XorExpression(b1, b2).getValue());
+        System.out.println(b1 + " xor not(" + b2 + ") = " + new XorExpression(b1, new NotExpression(b2)).getValue());
 
         System.out.println();
     }

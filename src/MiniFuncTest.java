@@ -4,12 +4,12 @@ public class MiniFuncTest {
     public static void main(String[] args) {
 
         /// given test cases
-        //TestCases.literalTests();		
-        //TestCases.variableTests();
-        //TestCases.arithmeticExpressioTest();
-        //TestCases.logicalExpression();
+        TestCases.literalTests();		
+        TestCases.variableTests();
+        TestCases.arithmeticExpressioTest();
+        TestCases.logicalExpression();
         TestCases.conditionalExpression();
-        //TestCases.ifExpression();
+        TestCases.ifExpression();
 
         /// student test cases
         //StudentTestCases.testCase1();
