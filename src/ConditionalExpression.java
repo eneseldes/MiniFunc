@@ -24,8 +24,11 @@ public class ConditionalExpression extends Expression{
         else if(x1.getValue() instanceof DoubleVariable || x1.getValue() instanceof DoubleLiteral || x1.getValue() instanceof Double){
             a = (Double) x1.getValue();
         }
-        else{
-            //hata throwla
+        else if((x1.getValue() instanceof StringVariable || x1.getValue() instanceof StringLiteral || x1.getValue() instanceof String) &&
+                (x2.getValue() instanceof StringVariable || x2.getValue() instanceof StringLiteral || x2.getValue() instanceof String) &&
+                (op.name().equals("Equal") || op.name().equals("NotEqual"))){
+            return new BooleanLiteral(x1.getValue().equals(x2.getValue()));
+            
         }
         if(x2.getValue() instanceof IntegerVariable || x2.getValue() instanceof IntegerLiteral || x2.getValue() instanceof Integer){
             b = (Integer) x2.getValue();
@@ -46,5 +49,9 @@ public class ConditionalExpression extends Expression{
 		case "GreaterEqual": return new BooleanLiteral(a.doubleValue()>=b.doubleValue());
             }
         return null;       
+    }
+    @Override
+    public String toString(){
+        return " (" + x1 +" "+ op + " "+ x2 +") ";
     }
 }

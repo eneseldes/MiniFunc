@@ -23,7 +23,7 @@ public class XorExpression extends Expression{
     }
     @Override
     public String toString(){
-        return "(" +x1.toString() +" xor " + x2.toString() +")";
+        return "(" +x1 +" xor " + x2 +")";
     }
     
 

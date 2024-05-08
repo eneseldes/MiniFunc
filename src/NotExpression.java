@@ -27,5 +27,9 @@ public class NotExpression extends Expression {
         return null;//Burada hata throwla
 
     }
+    @Override
+    public String toString(){
+       return " (" + !(boolean)value.getValue() +")"; 
+    }
 
 }

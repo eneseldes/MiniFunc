@@ -159,7 +159,7 @@ public class TestCases {
         Expression x1 = new IntegerLiteral(5);
         Expression x2 = new IntegerVariable("x2", 10);
         ConditionalOperator lessOp = ConditionalOperator.Less;
-        ConditionalOperator equalOp = ConditionalOperator.Equal;
+        ConditionalOperator equalOp = ConditionalOperator.Equal;        
 
         System.out.println(x2 + " = " + x2.getValue());
         System.out.println(x1 + " " + lessOp + " " + x2 + " = " + new ConditionalExpression(x1, x2, lessOp).getValue());

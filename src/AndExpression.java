@@ -20,5 +20,9 @@ public class AndExpression extends Expression{
         throw new IllegalArgumentException("Invalid type! ");
 
     }
+    @Override
+    public String toString(){
+        return " (" +x1 +" and " + x2 +") ";
+    }
 
 }

@@ -21,5 +21,9 @@ public class OrExpression extends Expression{
         }
         return null;//Hata fırlat buralarda
     }
+    @Override
+    public String toString(){
+        return " (" +x1+" or "+x2+") ";
+    }
 
 }
