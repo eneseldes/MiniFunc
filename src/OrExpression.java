@@ -19,7 +19,7 @@ public class OrExpression extends Expression{
         if(x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean){
             return new BooleanLiteral((boolean) x1.getValue() || (boolean)x2.getValue());
         }
-        return null;//Hata fırlat buralarda
+        throw new IllegalArgumentException(" Invalid expression entered!! ");
     }
     @Override
     public String toString(){

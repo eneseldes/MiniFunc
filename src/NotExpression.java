@@ -9,7 +9,7 @@ public class NotExpression extends Expression {
         if(value.getValue() instanceof Boolean){
             return !(boolean)value.getValue();
         }
-        return null;//Burada hata throwla
+        throw new IllegalArgumentException(" Invalid expression entered!! ");
     }
 
     @Override
@@ -24,7 +24,7 @@ public class NotExpression extends Expression {
             return newValue;
            
         }
-        return null;//Burada hata throwla
+        throw new IllegalArgumentException(" Invalid expression entered!! ");
 
     }
     @Override

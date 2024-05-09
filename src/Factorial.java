@@ -28,7 +28,7 @@ public class Factorial extends ArithmeticUnaryExpression{
                 return new DoubleLiteral(1.0);
             }
         }   
-        return null;//Hata fırlat
+        throw new IllegalArgumentException(" Invalid expression entered!! ");
     }
 
 }

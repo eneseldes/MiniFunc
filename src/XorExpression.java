@@ -19,7 +19,7 @@ public class XorExpression extends Expression{
             }
             return new BooleanLiteral(true);
         }
-        return null; //Hata fırlat
+        throw new IllegalArgumentException(" Invalid expression entered!! ");
     }
     @Override
     public String toString(){
