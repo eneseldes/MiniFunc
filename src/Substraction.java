@@ -1,14 +1,13 @@
 
+// Check Addition.java for comments
 public class Substraction extends ArithmeticBinaryExpression {
 
-    // Result of the expression
     Literal value;
 
     Substraction(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
 
-    // Getting value
     @Override
     Object getValue() {
         try {
@@ -20,59 +19,32 @@ public class Substraction extends ArithmeticBinaryExpression {
         }
     }
 
-    // Assigning and calculating
     @Override
     Expression execute() {
-        // If one of the expression is null, do not assign field 'value' and return null
-        if (leftExpression == null || rightExpression == null) {
+        // Different from Addition. This class accepts only Number
+        if (!(leftExpression.getValue() instanceof Number) && !(rightExpression.getValue() instanceof Number)) {
+            System.out.println("Encountered improper value in " + getClass().getName() + ". Results may be inaccurate!");
             return null;
         }
         
-        /*
-            To enhance readability, values of the left and right expressions are
-            assigned as 'leftValue' and 'rightValue'. 'resultValue' will be the
-            value that holds the result of the Substraction
-         */
         Object leftValue = leftExpression.getValue();
         Object rightValue = rightExpression.getValue();
-        Number resultValue = null;
-
-        // If values' data types are not int or double, return null
-        if (!(leftValue instanceof Number) && !(rightValue instanceof Number)) {
-            return null;
-        }
-
-        /*
-            From now on, only Number objects are left. In the if statement below,
-            to prevent 'casting exceptions' from happening, calculations are done
-            according to the values' data types
-            --Ex: Integer cannot be typecasted to Double
-        */
-        if (leftValue instanceof Integer && rightValue instanceof Integer) {
-            resultValue = (int) leftValue - (int) rightValue;
-        } else {
-            double e1 = leftValue instanceof Integer ? (int) leftValue : (double) leftValue;
-            double e2 = rightValue instanceof Integer ? (int) rightValue : (double) rightValue;
-
-            resultValue = e1 - e2;
-        }
-
-        /*
-            Assign the field 'value' according to whether resultValue has 
-            fractional part then execute
-        */
-        if (resultValue.doubleValue() % 1 == 0) {
-            value = IntegerLiteral.create(resultValue.intValue());
-            return value.execute();
-        } else {
-            value = DoubleLiteral.create(resultValue.doubleValue());
-            return value.execute();
-        }
+        
+        Number resultValue = ((Number) leftValue).doubleValue() - ((Number) rightValue).doubleValue();
+        value = resultValue.doubleValue() % 1 == 0 ? 
+                IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
+        
+        return value.execute();
     }
 
     @Override
     public String toString() {
-        return "(" + leftExpression.toString() + "-" + rightExpression.toString() + ")";
+        try{
+            return "(" + leftExpression.toString() + "-" + rightExpression.toString() + ")";
+        }
+        catch(Exception e){
+            return "**Inexpressible " + getClass().getName() + " result**";
+        }
     }
 
 }
