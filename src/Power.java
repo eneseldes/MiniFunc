@@ -10,13 +10,9 @@ public class Power extends ArithmeticBinaryExpression {
 
     @Override
     Object getValue() {
-        try {
             execute();
             return value.getValue();
 
-        } catch (NullPointerException e) {
-            return null;
-        }
     }
 
     @Override

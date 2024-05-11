@@ -22,39 +22,30 @@ public class ConditionalExpression extends Expression {
 
     @Override
     Expression execute() {
-        if (x1.getValue() instanceof IntegerVariable || x1.getValue() instanceof IntegerLiteral || x1.getValue() instanceof Integer) {
-            a = (Integer) x1.getValue();
-        } else if (x1.getValue() instanceof DoubleVariable || x1.getValue() instanceof DoubleLiteral || x1.getValue() instanceof Double) {
-            a = (Double) x1.getValue();
-        } else if (x1.getValue() instanceof String) {
-            str1 = (String) x1.getValue();
-
-        } else {
-            throw new IllegalArgumentException(" Invalid expression entered!! ");
+        if(x1.getValue() instanceof Number){
+            a = ((Number)x1.getValue());
+                if(x2.getValue() instanceof Number){
+                    b = ((Number)x2.getValue());
+                }
+                else{
+                    throw new IllegalArgumentException(" Invalid variable entered!! ");
+                }
         }
-        if (x2.getValue() instanceof IntegerVariable || x2.getValue() instanceof IntegerLiteral || x2.getValue() instanceof Integer) {
-            b = (Integer) x2.getValue();
-        } else if (x2.getValue() instanceof DoubleVariable || x2.getValue() instanceof DoubleLiteral || x2.getValue() instanceof Double) {
-            b = (Double) x2.getValue();
-        } else if (x2.getValue() instanceof String) {
-            str2 = (String) x2.getValue();
-
-        } else {
-            throw new IllegalArgumentException(" Invalid expression entered!! ");
-        }
-
-        if (str1 != null && str2 != null) {
-            switch (op.name()) {
-                case "Equal":
-                    return new BooleanLiteral(str1.equals(str2));
-                case "NotEqual":
-                    return new BooleanLiteral(!str1.equals(str2));
+        else if (x1.getValue() instanceof String) {
+            if (x2.getValue() instanceof String) {
+                switch (op.name()) {
+                    case "Equal":
+                        return new BooleanLiteral(x1.getValue().equals(str2));
+                    case "NotEqual":
+                        return new BooleanLiteral(!x2.getValue().equals(str2));
+                }
+                throw new IllegalArgumentException(" Invalid operator entered!! ");
             }
-            throw new IllegalArgumentException(" Invalid operator entered!! ");
-        } else if ((str1 == null && str2 != null) || (str1 != null && str2 == null)) {
-            throw new IllegalArgumentException(" String and Expression cannot be compared!!  ");
         }
-
+        else{
+            throw new IllegalArgumentException(" Invalid variable entered!! ");
+        }
+        
         switch (op.name()) {
             case "Equal":
                 return new BooleanLiteral(a.doubleValue() == b.doubleValue());
