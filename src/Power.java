@@ -31,10 +31,8 @@ public class Power extends ArithmeticBinaryExpression {
         int exponentNumerator = exponentAsIntegerValues[0];
         int exponentDenominator = exponentAsIntegerValues[1];
 
-        // The the nth-numerator- order exponent
+        // The the nth-numerator- order exponent, then nth-denominator- order root
         Double resultValue = pow(base, exponentNumerator) * root(base, exponentDenominator);
-        // Take the nth-denominator- order root
-        resultValue = root(resultValue, exponentDenominator);
 
         value = resultValue % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue);
@@ -44,7 +42,7 @@ public class Power extends ArithmeticBinaryExpression {
 
     // Takes nth order exponent recursively
     Double pow(Double base, Integer exponent) {
-        if (exponent == 0) {
+        if (exponent == 1) {
             return 1.0;
         }
         // if exponent is negative, invert the number
@@ -66,6 +64,9 @@ public class Power extends ArithmeticBinaryExpression {
 
     // Takes nth order root
     Double root(Double base, Integer exponent) {
+        System.out.println(base);
+        System.out.println(exponent);
+        System.out.println(Math.pow(base, 1.0 / exponent));
         return Math.pow(base, 1.0 / exponent);
     }
 
