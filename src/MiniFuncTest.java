@@ -4,7 +4,7 @@ public class MiniFuncTest {
     public static void main(String[] args) {
 
         /// given test cases
-        TestCases.literalTests();		
+        TestCases.literalTests();
         TestCases.variableTests();
         TestCases.arithmeticExpressioTest();
         TestCases.logicalExpression();

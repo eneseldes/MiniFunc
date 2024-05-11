@@ -47,7 +47,7 @@ public class Multipication extends ArithmeticBinaryExpression {
             to prevent 'casting exceptions' from happening, calculations are done
             according to the values' data types
             --Ex: Integer cannot be typecasted to Double
-        */
+         */
         if (leftValue instanceof Integer && rightValue instanceof Integer) {
             resultValue = (int) leftValue * (int) rightValue;
         } else {
@@ -60,7 +60,7 @@ public class Multipication extends ArithmeticBinaryExpression {
         /*
             Assign the field 'value' according to whether resultValue has 
             fractional part then execute
-        */
+         */
         if (resultValue.doubleValue() % 1 == 0) {
             value = IntegerLiteral.create(resultValue.intValue());
             return value.execute();

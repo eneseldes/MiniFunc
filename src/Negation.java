@@ -46,7 +46,7 @@ public class Negation extends ArithmeticUnaryExpression {
             to prevent 'casting exceptions' from happening, calculations are done
             according to the values' data types
             --Ex: Integer cannot be typecasted to Double
-        */
+         */
         if (inputValue instanceof Integer) {
             resultValue = -(int) inputValue;
         } else {
@@ -56,7 +56,7 @@ public class Negation extends ArithmeticUnaryExpression {
         /*
             Assign the field 'value' according to whether resultValue has 
             fractional part then execute
-        */
+         */
         if (resultValue.doubleValue() % 1 == 0) {
             value = IntegerLiteral.create(resultValue.intValue());
             return value.execute();

@@ -47,10 +47,10 @@ public class Division extends ArithmeticBinaryExpression {
             to prevent 'casting exceptions' from happening, calculations are done
             according to the values' data types
             --Ex: Integer cannot be typecasted to Double
-        */
+         */
         if (leftValue instanceof Integer && rightValue instanceof Integer) {
             //If denominator is 0, return null and give a warning
-            if ((int)rightValue == 0) {
+            if ((int) rightValue == 0) {
                 System.out.println("A null result occurred due to division by zero caused by " + rightExpression.toString());
                 return null;
             }
@@ -65,7 +65,7 @@ public class Division extends ArithmeticBinaryExpression {
         /*
             Assign the field 'value' according to whether resultValue has 
             fractional part then execute
-        */
+         */
         if (resultValue.doubleValue() % 1 == 0) {
             value = IntegerLiteral.create(resultValue.intValue());
             return value.execute();

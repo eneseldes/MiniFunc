@@ -134,7 +134,7 @@ public class TestCases {
         Expression b1 = new BooleanLiteral(true);
         Expression b2 = new BooleanVariable("b2", false);
         System.out.println(b2 + " = " + b2.getValue());
-        System.out.println("not(" + b1 + ") = " + new NotExpression(b1).execute());		
+        System.out.println("not(" + b1 + ") = " + new NotExpression(b1).execute());
         System.out.println(b1 + " and " + b2 + " = " + new AndExpression(b1, b2).getValue());
         System.out.println(b1 + " and not(" + b2 + ") = " + new AndExpression(b1, new NotExpression(b2)).getValue());
         System.out.println(b1 + " or " + b2 + " = " + new OrExpression(b1, b2).getValue());
@@ -159,7 +159,7 @@ public class TestCases {
         Expression x1 = new IntegerLiteral(5);
         Expression x2 = new IntegerVariable("x2", 10);
         ConditionalOperator lessOp = ConditionalOperator.Less;
-        ConditionalOperator equalOp = ConditionalOperator.Equal;        
+        ConditionalOperator equalOp = ConditionalOperator.Equal;
 
         System.out.println(x2 + " = " + x2.getValue());
         System.out.println(x1 + " " + lessOp + " " + x2 + " = " + new ConditionalExpression(x1, x2, lessOp).getValue());
