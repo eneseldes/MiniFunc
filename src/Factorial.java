@@ -1,8 +1,20 @@
 
 public class Factorial extends ArithmeticUnaryExpression {
 
-    public Factorial(Expression expression) {//Tam sayı alma olayını yap
+    Integer number;
+
+    public Factorial(Expression expression) {
         super(expression);
+        if (expression.getValue() instanceof Number) {
+            if (((Number) expression.getValue()).intValue() % 1 == 0) {
+                this.number = ((Number) expression.getValue()).intValue();
+            } else {
+                throw new IllegalArgumentException(" Invalid type of number entered. Enter a integer!! ");
+            }
+
+        } else {
+            throw new IllegalArgumentException(" Invalid type of expression entered. Enter a number!! ");
+        }
     }
 
     @Override
@@ -12,24 +24,19 @@ public class Factorial extends ArithmeticUnaryExpression {
 
     @Override
     Expression execute() {
-        if (expression.getValue() instanceof Integer) {
-            if ((int) expression.getValue() > 1) {
-                return new Multipication(expression, new Factorial(new IntegerLiteral((int) expression.getValue() - 1)).execute());
-            } else {
-                return new IntegerLiteral(1);
-            }
-        } else if (expression.getValue() instanceof Double) {
-            if ((double) expression.getValue() > 1) {
-                return new Multipication(expression, new Factorial(new DoubleLiteral((double) expression.getValue() - 1)).execute());
-            } else {
-                return new DoubleLiteral(1.0);
-            }
+
+        if (number > 1) {
+            return new Multipication(expression, new Factorial(new IntegerLiteral(number - 1)).execute());
+
+        } else {
+            return new IntegerLiteral(1);
         }
-        throw new IllegalArgumentException(" Invalid expression entered!! ");
+
     }
-    
-    public String toString(){
-        return expression.getValue() +"!";    
+
+    @Override
+    public String toString() {
+        return expression.getValue() + "! = " + getValue();
     }
 
 }

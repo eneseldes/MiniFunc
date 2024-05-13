@@ -5,8 +5,12 @@ public class XorExpression extends Expression {
     Expression x2;
 
     XorExpression(Expression x1, Expression x2) {
-        this.x1 = x1;
-        this.x2 = x2;
+        if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
+            this.x1 = x1;
+            this.x2 = x2;
+        } else {
+            throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
+        }
     }
 
     @Override
@@ -16,18 +20,15 @@ public class XorExpression extends Expression {
 
     @Override
     Expression execute() {
-        if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-            if (x1.getValue() == x2.getValue()) {
-                return new BooleanLiteral(false);
-            }
-            return new BooleanLiteral(true);
+        if (x1.getValue() == x2.getValue()) {
+            return new BooleanLiteral(false);
         }
-        throw new IllegalArgumentException(" Invalid expression entered!! ");
+        return new BooleanLiteral(true);
     }
 
     @Override
     public String toString() {
-        return "(" + x1 + " xor " + x2 + ")";
+        return "( " + x1 + " xor " + x2 + " ) = " +getValue();
     }
 
 }
