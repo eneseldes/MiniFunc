@@ -13,17 +13,23 @@ public class Absolute extends ArithmeticUnaryExpression {
             execute();
             return value.getValue();
 
-        } catch (Exception e) {
-            return null;
+        } catch (NullPointerException e) {
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
         }
+        
+        return null;
     }
 
     @Override
     Expression execute() {
         // Different from Addition. This class accepts only Number
-        if (!(expression.getValue() instanceof Number)) {
-            System.out.println("Encountered null value in " + getClass().getName() + ". Results may be inaccurate!");
-            return null;
+        if (expression == null) {
+            throw new NullPointerException();
+        }
+        else if (!(expression.getValue() instanceof Number)) {
+            throw new IllegalArgumentException();
         }
 
         Double inputValue = ((Number) expression.getValue()).doubleValue();

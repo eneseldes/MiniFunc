@@ -16,16 +16,20 @@ public class Addition extends ArithmeticBinaryExpression {
             return value.getValue();
 
         } catch (NullPointerException e) {
-            return null;
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
         }
+        
+        return null;
     }
 
     // Assigning and calculating
     @Override
     Expression execute() {
         // If one of the expression is null, do not assign field 'value' and return null
-        if (leftExpression.getValue() == null || rightExpression.getValue() == null) {
-            return null;
+        if (leftExpression == null || rightExpression == null) {
+            throw new NullPointerException();
         }
 
         /*
@@ -35,7 +39,6 @@ public class Addition extends ArithmeticBinaryExpression {
          */
         Object leftValue = leftExpression.getValue();
         Object rightValue = rightExpression.getValue();
-        Number resultValue = null;
 
         // If one of the value is String, do concatenation
         if (leftValue instanceof String || rightValue instanceof String) {
@@ -43,42 +46,34 @@ public class Addition extends ArithmeticBinaryExpression {
             return value.execute();
         }
 
-        // If values' data types are not int or double -also string-, return null
-        if (!(leftValue instanceof Number) && !(rightValue instanceof Number)) {
-            return null;
+        // If values' data types are not int or double -also string-, throw exception
+        if (!(leftValue instanceof Number) || !(rightValue instanceof Number)) {
+            throw new IllegalArgumentException();
         }
 
         /*
-            From now on, only Number objects are left. In the if statement below,
-            to prevent 'casting exceptions' from happening, calculations are done
-            according to the values' data types
-            --Ex: Integer cannot be typecasted to Double
+            Object values are typcased to Number, since typecasting between int 
+            and double is a trouble while looking at the numbers as Object.
          */
-        if (leftValue instanceof Integer && rightValue instanceof Integer) {
-            resultValue = (int) leftValue + (int) rightValue;
-        } else {
-            double e1 = leftValue instanceof Integer ? (int) leftValue : (double) leftValue;
-            double e2 = rightValue instanceof Integer ? (int) rightValue : (double) rightValue;
-
-            resultValue = e1 + e2;
-        }
+        Number resultValue = ((Number) leftValue).doubleValue() + ((Number) rightValue).doubleValue();
 
         /*
             Assign the field 'value' according to whether resultValue has 
             fractional part then execute
          */
-        if (resultValue.doubleValue() % 1 == 0) {
-            value = IntegerLiteral.create(resultValue.intValue());
-            return value.execute();
-        } else {
-            value = DoubleLiteral.create(resultValue.doubleValue());
-            return value.execute();
-        }
+        value = resultValue.doubleValue() % 1 == 0
+                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
+
+        return value.execute();
     }
 
     @Override
     public String toString() {
-        return "(" + leftExpression.toString() + "+" + rightExpression.toString() + ")";
+        try {
+            return "(" + leftExpression.toString() + "+" + rightExpression.toString() + ")";
+        } catch (Exception e) {
+            return "**Inexpressible " + getClass().getName() + " result**";
+        }
     }
 
 }

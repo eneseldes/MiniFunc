@@ -10,17 +10,27 @@ public class Power extends ArithmeticBinaryExpression {
 
     @Override
     Object getValue() {
+        try {
             execute();
             return value.getValue();
 
+        } catch (NullPointerException e) {
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        }
+        
+        return null;
     }
 
     @Override
     Expression execute() {
         // Different from Addition. This class accepts only Number
-        if (!(leftExpression.getValue() instanceof Number) && !(rightExpression.getValue() instanceof Number)) {
-            System.out.println("Encountered improper value in " + getClass().getName() + ". Results may be inaccurate!");
-            return null;
+        if (leftExpression == null || rightExpression == null) {
+            throw new NullPointerException();
+        }
+        else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
+            throw new IllegalArgumentException();
         }
 
         Double base = ((Number) leftExpression.getValue()).doubleValue();
@@ -36,8 +46,8 @@ public class Power extends ArithmeticBinaryExpression {
         
             The assigning value of 'resultValue' below is the code representation
             of the arithmetic expression above
-        */
-        Double resultValue =  root(pow(base, exponentNumerator), exponentDenominator);
+         */
+        Double resultValue = root(pow(base, exponentNumerator), exponentDenominator);
 
         value = resultValue % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue);
@@ -54,7 +64,7 @@ public class Power extends ArithmeticBinaryExpression {
         if (exponent < 0) {
             return 1 / pow(base, -exponent);
         }
-        
+
         return base * pow(base, exponent - 1);
     }
 
@@ -63,7 +73,7 @@ public class Power extends ArithmeticBinaryExpression {
         if (b == 0) {
             return a;
         }
-        
+
         return gcd(b, a % b);
     }
 
@@ -80,27 +90,25 @@ public class Power extends ArithmeticBinaryExpression {
 
         // Main logic of this method is as follows:
         // 0.75 --> 75 / 100 --> (using gcd) 3 / 4
-        
         int denominator = (int) Math.pow(10, decimalPlaces);
         int numerator = (int) (exponent * denominator);
         int gcd = gcd(numerator, denominator);
-        
+
         // Simplification
         numerator /= gcd;
         denominator /= gcd;
-        
+
         int[] exponentAsDecimal = {numerator, denominator};
         return exponentAsDecimal;
     }
 
     @Override
     public String toString() {
-        try{
+        try {
             return "power(" + leftExpression.toString() + "," + rightExpression.toString() + ")";
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return "**Inexpressible " + getClass().getName() + " result**";
         }
     }
-    
+
 }
