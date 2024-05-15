@@ -14,29 +14,27 @@ public class Substraction extends ArithmeticBinaryExpression {
             execute();
             return value.getValue();
 
-        } catch (NullPointerException e) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (Exception e) {
+            return null;
         }
-        
-        return null;
     }
 
     @Override
     Expression execute() {
         // Different from Addition. This class accepts only Number
         if (leftExpression == null || rightExpression == null) {
-            throw new NullPointerException();
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
         }
         else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
-            throw new IllegalArgumentException();
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
         }
 
-        Object leftValue = leftExpression.getValue();
-        Object rightValue = rightExpression.getValue();
+        Double leftValue = ((Number) leftExpression.getValue()).doubleValue();
+        Double rightValue = ((Number) rightExpression.getValue()).doubleValue();
+        Number resultValue = leftValue - rightValue;
 
-        Number resultValue = ((Number) leftValue).doubleValue() - ((Number) rightValue).doubleValue();
         value = resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
 

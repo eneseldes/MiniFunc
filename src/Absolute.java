@@ -1,4 +1,5 @@
 
+// Check Addition.java for comments
 public class Absolute extends ArithmeticUnaryExpression {
 
     Literal value;
@@ -13,23 +14,20 @@ public class Absolute extends ArithmeticUnaryExpression {
             execute();
             return value.getValue();
 
-        } catch (NullPointerException e) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (Exception e) {
+            return null;
         }
-        
-        return null;
     }
 
     @Override
     Expression execute() {
         // Different from Addition. This class accepts only Number
         if (expression == null) {
-            throw new NullPointerException();
-        }
-        else if (!(expression.getValue() instanceof Number)) {
-            throw new IllegalArgumentException();
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
+        } else if (!(expression.getValue() instanceof Number)) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
         }
 
         Double inputValue = ((Number) expression.getValue()).doubleValue();

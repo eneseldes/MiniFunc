@@ -4,8 +4,8 @@ public class Power extends ArithmeticBinaryExpression {
 
     Literal value;
 
-    Power(Expression base, Expression exponent) {
-        super(base, exponent);
+    Power(Expression leftExpression, Expression rightExpression) {
+        super(leftExpression, rightExpression);
     }
 
     @Override
@@ -14,23 +14,20 @@ public class Power extends ArithmeticBinaryExpression {
             execute();
             return value.getValue();
 
-        } catch (NullPointerException e) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (Exception e) {
+            return null;
         }
-        
-        return null;
     }
 
     @Override
     Expression execute() {
         // Different from Addition. This class accepts only Number
         if (leftExpression == null || rightExpression == null) {
-            throw new NullPointerException();
-        }
-        else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
-            throw new IllegalArgumentException();
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
+        } else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
         }
 
         Double base = ((Number) leftExpression.getValue()).doubleValue();
@@ -47,7 +44,8 @@ public class Power extends ArithmeticBinaryExpression {
             The assigning value of 'resultValue' below is the code representation
             of the arithmetic expression above
          */
-        Double resultValue = root(pow(base, exponentNumerator), exponentDenominator);
+        Double exponentialResult = ((Number) pow(base, exponentNumerator).getValue()).doubleValue();
+        Double resultValue = root(exponentialResult, exponentDenominator);
 
         value = resultValue % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue);
@@ -56,16 +54,17 @@ public class Power extends ArithmeticBinaryExpression {
     }
 
     // Takes nth order exponent recursively
-    Double pow(Double base, Integer exponent) {
+    Expression pow(Double base, Integer exponent) {
         if (exponent == 0) {
-            return 1.0;
+            return new IntegerLiteral(1);
         }
         // if exponent is negative, invert the number
         if (exponent < 0) {
-            return 1 / pow(base, -exponent);
+            return new Division(new IntegerLiteral(1), new Power(new DoubleLiteral(base), new IntegerLiteral(-exponent))).execute();
         }
 
-        return base * pow(base, exponent - 1);
+        return new Multipication(new DoubleLiteral(base), new Power(new DoubleLiteral(base), new IntegerLiteral(exponent - 1))).execute();
+
     }
 
     // Finds greates common divisor

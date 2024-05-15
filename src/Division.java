@@ -14,42 +14,38 @@ public class Division extends ArithmeticBinaryExpression {
             execute();
             return value.getValue();
 
-        } catch (NullPointerException e) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (Exception e) {
+            return null;
         }
-        
-        return null;
     }
 
     @Override
     Expression execute() {
-       // Different from Addition. This class accepts only Number
+        // Different from Addition. This class accepts only Number
         if (leftExpression == null || rightExpression == null) {
-            throw new NullPointerException();
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
+        } else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
         }
-        else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
-            throw new IllegalArgumentException();
-        }
-        
-        Object leftValue = leftExpression.getValue();
-        Object rightValue = rightExpression.getValue();
 
-        Number resultValue = ((Number) leftValue).doubleValue() / ((Number) rightValue).doubleValue();
-        value = resultValue.doubleValue() % 1 == 0 ? 
-                IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
+        Double leftValue = ((Number) leftExpression.getValue()).doubleValue();
+        Double rightValue = ((Number) rightExpression.getValue()).doubleValue();
+        Number resultValue = leftValue / rightValue;
+
+        value = resultValue.doubleValue() % 1 == 0
+                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
 
         return value.execute();
-        
+
     }
 
     @Override
     public String toString() {
-        try{
+        try {
             return "(" + leftExpression.toString() + "/" + rightExpression.toString() + ")";
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return "**Inexpressible " + getClass().getName() + " result**";
         }
     }

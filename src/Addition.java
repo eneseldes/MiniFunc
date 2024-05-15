@@ -20,7 +20,7 @@ public class Addition extends ArithmeticBinaryExpression {
         } catch (IllegalArgumentException e) {
             System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
         }
-        
+
         return null;
     }
 
