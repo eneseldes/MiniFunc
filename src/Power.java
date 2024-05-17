@@ -2,8 +2,6 @@
 // Check Addition.Java for comments
 public class Power extends ArithmeticBinaryExpression {
 
-    Literal value;
-
     Power(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
@@ -11,8 +9,7 @@ public class Power extends ArithmeticBinaryExpression {
     @Override
     Object getValue() {
         try {
-            execute();
-            return value.getValue();
+            return execute().getValue();
 
         } catch (Exception e) {
             return null;
@@ -45,12 +42,10 @@ public class Power extends ArithmeticBinaryExpression {
             of the arithmetic expression above
          */
         Double exponentialResult = ((Number) pow(base, exponentNumerator).getValue()).doubleValue();
-        Double resultValue = root(exponentialResult, exponentDenominator);
+        Number resultValue = root(exponentialResult, exponentDenominator);
 
-        value = resultValue % 1 == 0
-                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue);
-
-        return value.execute();
+        return resultValue.doubleValue() % 1 == 0
+                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
     }
 
     // Takes nth order exponent recursively
@@ -104,7 +99,7 @@ public class Power extends ArithmeticBinaryExpression {
     @Override
     public String toString() {
         try {
-            return "power(" + leftExpression.toString() + "," + rightExpression.toString() + ")";
+            return "(" + leftExpression.toString() + "^" + rightExpression.toString() + ")";
         } catch (Exception e) {
             return "**Inexpressible " + getClass().getName() + " result**";
         }

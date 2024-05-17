@@ -1,9 +1,6 @@
 
 public class Addition extends ArithmeticBinaryExpression {
 
-    // Result of the expression
-    Literal value;
-
     Addition(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
@@ -12,16 +9,11 @@ public class Addition extends ArithmeticBinaryExpression {
     @Override
     Object getValue() {
         try {
-            execute();
-            return value.getValue();
+            return execute().getValue();
 
-        } catch (NullPointerException e) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+        } catch (Exception e) {
+            return null;
         }
-
-        return null;
     }
 
     // Assigning and calculating
@@ -29,26 +21,22 @@ public class Addition extends ArithmeticBinaryExpression {
     Expression execute() {
         // If one of the expression is null, do not assign field 'value' and return null
         if (leftExpression == null || rightExpression == null) {
-            throw new NullPointerException();
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
         }
 
-        /*
-            To enhance readability, values of the left and right expressions are
-            assigned as 'leftValue' and 'rightValue'. 'resultValue' will be the
-            value that holds the result of the Addition
-         */
         Object leftValue = leftExpression.getValue();
         Object rightValue = rightExpression.getValue();
 
         // If one of the value is String, do concatenation
         if (leftValue instanceof String || rightValue instanceof String) {
-            value = StringLiteral.create("" + leftValue + rightValue);
-            return value.execute();
+            return StringLiteral.create("" + leftValue + rightValue);
         }
 
         // If values' data types are not int or double -also string-, throw exception
-        if (!(leftValue instanceof Number) || !(rightValue instanceof Number)) {
-            throw new IllegalArgumentException();
+        if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
         }
 
         /*
@@ -61,16 +49,14 @@ public class Addition extends ArithmeticBinaryExpression {
             Assign the field 'value' according to whether resultValue has 
             fractional part then execute
          */
-        value = resultValue.doubleValue() % 1 == 0
+        return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
-
-        return value.execute();
     }
 
     @Override
     public String toString() {
         try {
-            return "(" + leftExpression.toString() + "+" + rightExpression.toString() + ")";
+            return leftExpression.toString() + "+" + rightExpression.toString();
         } catch (Exception e) {
             return "**Inexpressible " + getClass().getName() + " result**";
         }

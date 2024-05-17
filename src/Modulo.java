@@ -2,8 +2,6 @@
 // Check Addition.java for comments
 public class Modulo extends ArithmeticBinaryExpression {
 
-    Literal value;
-
     Modulo(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
@@ -11,8 +9,7 @@ public class Modulo extends ArithmeticBinaryExpression {
     @Override
     Object getValue() {
         try {
-            execute();
-            return value.getValue();
+            return execute().getValue();
 
         } catch (Exception e) {
             return null;
@@ -29,23 +26,29 @@ public class Modulo extends ArithmeticBinaryExpression {
             System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
             return null;
         }
-        
+
         Double leftValue = ((Number) leftExpression.getValue()).doubleValue();
         Double rightValue = ((Number) rightExpression.getValue()).doubleValue();
         Number resultValue;
-        
+
         // Find modulo with recursion
         if (leftValue < rightValue) {
             resultValue = leftValue;
-        }
-        else{
+        } else {
             resultValue = (Number) new Modulo(new DoubleLiteral(leftValue - rightValue), new DoubleLiteral(rightValue)).getValue();
         }
 
-        value = resultValue.doubleValue() % 1 == 0
+        return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
+    }
 
-        return value.execute();
+    @Override
+    public String toString() {
+        try {
+            return leftExpression.toString() + "%" + rightExpression.toString();
+        } catch (Exception e) {
+            return "**Inexpressible " + getClass().getName() + " result**";
+        }
     }
 
 }

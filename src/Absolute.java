@@ -2,8 +2,6 @@
 // Check Addition.java for comments
 public class Absolute extends ArithmeticUnaryExpression {
 
-    Literal value;
-
     Absolute(Expression expression) {
         super(expression);
     }
@@ -11,8 +9,7 @@ public class Absolute extends ArithmeticUnaryExpression {
     @Override
     Object getValue() {
         try {
-            execute();
-            return value.getValue();
+            return execute().getValue();
 
         } catch (Exception e) {
             return null;
@@ -33,10 +30,8 @@ public class Absolute extends ArithmeticUnaryExpression {
         Double inputValue = ((Number) expression.getValue()).doubleValue();
         Number resultValue = inputValue >= 0 ? inputValue : -inputValue;
 
-        value = resultValue.doubleValue() % 1 == 0
+        return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
-
-        return value.execute();
     }
 
     @Override

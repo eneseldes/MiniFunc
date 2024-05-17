@@ -2,8 +2,6 @@
 // Check Addition.java for comments
 public class Division extends ArithmeticBinaryExpression {
 
-    Literal value;
-
     Division(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
@@ -11,8 +9,7 @@ public class Division extends ArithmeticBinaryExpression {
     @Override
     Object getValue() {
         try {
-            execute();
-            return value.getValue();
+            return execute().getValue();
 
         } catch (Exception e) {
             return null;
@@ -30,15 +27,10 @@ public class Division extends ArithmeticBinaryExpression {
             return null;
         }
 
-        Double leftValue = ((Number) leftExpression.getValue()).doubleValue();
-        Double rightValue = ((Number) rightExpression.getValue()).doubleValue();
-        Number resultValue = leftValue / rightValue;
+        Number resultValue = ((Number) leftExpression.getValue()).doubleValue() / ((Number) rightExpression.getValue()).doubleValue();
 
-        value = resultValue.doubleValue() % 1 == 0
+        return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
-
-        return value.execute();
-
     }
 
     @Override

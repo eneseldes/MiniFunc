@@ -2,8 +2,6 @@
 // Check Addition.java for comments
 public class Negation extends ArithmeticUnaryExpression {
 
-    Literal value;
-
     Negation(Expression expression) {
         super(expression);
     }
@@ -11,8 +9,7 @@ public class Negation extends ArithmeticUnaryExpression {
     @Override
     Object getValue() {
         try {
-            execute();
-            return value.getValue();
+            return execute().getValue();
 
         } catch (Exception e) {
             return null;
@@ -25,25 +22,21 @@ public class Negation extends ArithmeticUnaryExpression {
         if (expression == null) {
             System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
             return null;
-        }
-        else if (!(expression.getValue() instanceof Number)) {
+        } else if (!(expression.getValue() instanceof Number)) {
             System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
             return null;
         }
 
-        Double inputValue = ((Number)expression.getValue()).doubleValue();
-        Number resultValue = -inputValue;
-        
-        value = resultValue.doubleValue() % 1 == 0
-                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
+        Number resultValue = -((Number) expression.getValue()).doubleValue();
 
-        return value.execute();
+        return resultValue.doubleValue() % 1 == 0
+                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
     }
 
     @Override
     public String toString() {
         try {
-            return "-" + expression.toString();
+            return "-(" + expression.toString() + ")";
         } catch (Exception e) {
             return "**Inexpressible " + getClass().getName() + " result**";
         }
