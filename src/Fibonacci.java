@@ -12,11 +12,9 @@ public class Fibonacci extends Function {
     Fibonacci(Expression term) {
         this.term = term;
         if (term.getValue() instanceof Number) {
-            this.termInt = ((Number) term.getValue()).intValue();
-            this.fibonacciList.add(this.firstTerm);
-            this.fibonacciList.add(this.secondTerm);
-        } else {
-            throw new IllegalArgumentException(" Invalid type of expression entered. Enter a Number!! ");
+            termInt = ((Number) term.getValue()).intValue();
+            fibonacciList.add(firstTerm);
+            fibonacciList.add(secondTerm);
         }
     }
 
@@ -36,23 +34,46 @@ public class Fibonacci extends Function {
 
     @Override
     Expression execute() {
-        if (termInt - 1 > 1) {
-            return new Fibonacci(secondTerm, (firstTerm + secondTerm), (termInt - 1), term, fibonacciList).execute();
-        } else {
-            return new IntegerLiteral(secondTerm);
+        try {
+            if (term.getValue() instanceof Number) {
+                if (((Number) term.getValue()).doubleValue() % 1 != 0) {
+                    throw new IllegalArgumentException(" Invalid type of expression entered. Enter a Integer!! ");
+                }
+                else if(termInt<1){
+                    throw new IllegalArgumentException(" Enter a positive number!!");
+                }
+                if (termInt - 1 > 1) {
+                    return new Fibonacci(secondTerm, (Integer) new Addition(new IntegerLiteral(firstTerm),
+                            new IntegerLiteral(secondTerm)).getValue(), (Integer) new Substraction(new IntegerLiteral(termInt), new IntegerLiteral(1)).getValue(),
+                            term, fibonacciList).execute();
+                } else {
+                    return new IntegerLiteral(secondTerm);
+                }
+            } else {
+                throw new IllegalArgumentException(" Invalid type of expression entered. Enter a Integer!! ");
+            }
+        } catch (Exception e) {
+            System.out.println(getClass().getSimpleName() + " " + e);
         }
+        return new StringLiteral("");
+
     }
 
     @Override
     public String toString() {
-        execute();
-        StringBuffer sb = new StringBuffer();
-        for (Integer i : fibonacciList) {
-            sb.append(i);
-            sb.append(" ");
+
+        if (term.getValue() instanceof Number) {
+            if (((Number) term.getValue()).doubleValue() % 1 == 0 && ((Number)term.getValue()).doubleValue()>=1) {
+                execute();
+                StringBuffer sb = new StringBuffer();
+                for (Integer i : fibonacciList) {
+                    sb.append(i);
+                    sb.append(" ");
+                }
+                return sb.toString();
+            }
         }
+        return getValue().toString();
 
-        return sb.toString();
     }
-
 }

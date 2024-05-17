@@ -5,13 +5,8 @@ public class AndExpression extends Expression {
     Expression x2;
 
     AndExpression(Expression x1, Expression x2) {
-        if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-
-            this.x1 = x1;
-            this.x2 = x2;
-        } else {
-            throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
-        }
+        this.x1 = x1;
+        this.x2 = x2;
     }
 
     @Override
@@ -21,13 +16,26 @@ public class AndExpression extends Expression {
 
     @Override
     Expression execute() {
-        return new BooleanLiteral((boolean) x1.getValue() && (boolean) x2.getValue());
-
+        try {
+            if (x1 == null || x2 == null) {
+                throw new NullPointerException(" An expression is null!! ");
+            } else if(x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean){
+                return new BooleanLiteral((boolean) x1.getValue() && (boolean) x2.getValue());
+            }
+            else{
+                throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
+            }
+        } catch (Exception e) {
+            System.out.println(getClass().getSimpleName() + " " + e);
+        }
+        return new StringLiteral("");
     }
 
     @Override
     public String toString() {
-        return "( " + x1 + " and " + x2 + " ) = " +getValue();
+        if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
+          return "( " + x1 + " and " + x2 + " ) = " + getValue();
+        }
+        return getValue().toString();
     }
-
 }

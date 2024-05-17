@@ -2,20 +2,20 @@
 public class PrimeNumber extends Function {
 
     Expression number;
-    private Double divisor = 2.0;
+    private Integer divisor = 2;
     private Boolean isPrime;
     private Double numberDouble;
 
     PrimeNumber(Expression number) {
         this.number = number;
         if (number.getValue() instanceof Number) {
+
             numberDouble = ((Number) number.getValue()).doubleValue();
-        } else {
-           throw new IllegalArgumentException(" Invalid type of expression entered. Enter a Number!! ");
+
         }
     }
 
-    private PrimeNumber(Double numberDouble, Double divisor) {
+    private PrimeNumber(Double numberDouble, Integer divisor) {
         this.divisor = divisor;
         this.numberDouble = numberDouble;
     }
@@ -27,24 +27,37 @@ public class PrimeNumber extends Function {
 
     @Override
     Expression execute() {
+        try {
+            if (number.getValue() instanceof Number) {
+                if (numberDouble % 1 != 0) {
+                    return new BooleanLiteral(false);
+                }
 
-        if (numberDouble % 1 != 0) {
-            return new BooleanLiteral(false);
-        }
-        if (divisor < numberDouble) {
-            if (numberDouble % divisor == 0) {
-                return new BooleanLiteral(false);
+                if ((Boolean) new ConditionalExpression(new IntegerLiteral(divisor), new DoubleLiteral(numberDouble), ConditionalOperator.Less).getValue()) {
+                    if (numberDouble % divisor == 0) {
+                        return new BooleanLiteral(false);
+                    } else {
+                        return new PrimeNumber(numberDouble, (Integer) new Addition(new DoubleLiteral(divisor),
+                                new DoubleLiteral(1.0)).getValue()).execute();
+                    }
+                } else if (numberDouble == 1) {
+                    return new BooleanLiteral(false);
+                }
+                return new BooleanLiteral(true);
             } else {
-                return new PrimeNumber(numberDouble, (divisor + 1.0)).execute();
+                throw new IllegalArgumentException(" Invalid type of expression entered. Enter a Number!! ");
             }
-        } else if (numberDouble == 1) {
-            return new BooleanLiteral(false);
+        } catch (Exception e) {
+            System.out.println(getClass().getSimpleName() + " " + e);
         }
-        return new BooleanLiteral(true);
+        return new StringLiteral("");
 
     }
 
     public String toString() {
-        return "Is " + number + " prime?: " + (boolean) getValue();
+        if(number.getValue() instanceof Number){
+            return "Is " +number.getValue() +" is prime? " +getValue();
+        }
+        return getValue().toString();
     }
 }

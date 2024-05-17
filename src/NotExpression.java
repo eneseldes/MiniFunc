@@ -4,28 +4,35 @@ public class NotExpression extends Expression {
     Expression value;
 
     NotExpression(Expression value) {
-        if(value.getValue() instanceof Boolean){
-            this.value = value; 
-        }
-        else{
-            throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
-        }
-        
+        this.value = value;
     }
 
     @Override
-    Object getValue() {       
-            return !(boolean) value.getValue();
+    Object getValue() {
+        return execute().getValue();
     }
 
     @Override
     Expression execute() {
-        return value;  
+        try {
+            if (value.getValue() instanceof Boolean) {
+                return new BooleanLiteral(!(boolean) value.getValue());
+            } else {
+                throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
+            }
+        } catch (Exception e) {
+            System.out.println(getClass().getSimpleName() + " " + e);
+        }
+        return new StringLiteral("");
     }
 
     @Override
     public String toString() {
-        return "(" + getValue() + ")" ;
+        if (value.getValue() instanceof Boolean) {
+            return "(" + getValue() + ")";
+        }
+        return getValue().toString();
+
     }
 
 }
