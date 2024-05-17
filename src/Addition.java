@@ -1,9 +1,6 @@
 
 public class Addition extends ArithmeticBinaryExpression {
 
-    // Result of the expression
-    Literal value;
-
     Addition(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
@@ -12,10 +9,9 @@ public class Addition extends ArithmeticBinaryExpression {
     @Override
     Object getValue() {
         try {
-            execute();
-            return value.getValue();
+            return execute().getValue();
 
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -24,61 +20,46 @@ public class Addition extends ArithmeticBinaryExpression {
     @Override
     Expression execute() {
         // If one of the expression is null, do not assign field 'value' and return null
-        if (leftExpression.getValue() == null || rightExpression.getValue() == null) {
+        if (leftExpression == null || rightExpression == null) {
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
             return null;
         }
 
-        /*
-            To enhance readability, values of the left and right expressions are
-            assigned as 'leftValue' and 'rightValue'. 'resultValue' will be the
-            value that holds the result of the Addition
-         */
         Object leftValue = leftExpression.getValue();
         Object rightValue = rightExpression.getValue();
-        Number resultValue = null;
 
         // If one of the value is String, do concatenation
         if (leftValue instanceof String || rightValue instanceof String) {
-            value = StringLiteral.create("" + leftValue + rightValue);
-            return value.execute();
+            return StringLiteral.create("" + leftValue + rightValue);
         }
 
-        // If values' data types are not int or double -also string-, return null
-        if (!(leftValue instanceof Number) && !(rightValue instanceof Number)) {
+        // If values' data types are not int or double -also string-, throw exception
+        if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
             return null;
         }
 
         /*
-            From now on, only Number objects are left. In the if statement below,
-            to prevent 'casting exceptions' from happening, calculations are done
-            according to the values' data types
-            --Ex: Integer cannot be typecasted to Double
+            Object values are typcased to Number, since typecasting between int 
+            and double is a trouble while looking at the numbers as Object.
          */
-        if (leftValue instanceof Integer && rightValue instanceof Integer) {
-            resultValue = (int) leftValue + (int) rightValue;
-        } else {
-            double e1 = leftValue instanceof Integer ? (int) leftValue : (double) leftValue;
-            double e2 = rightValue instanceof Integer ? (int) rightValue : (double) rightValue;
-
-            resultValue = e1 + e2;
-        }
+        Number resultValue = ((Number) leftValue).doubleValue() + ((Number) rightValue).doubleValue();
 
         /*
             Assign the field 'value' according to whether resultValue has 
             fractional part then execute
          */
-        if (resultValue.doubleValue() % 1 == 0) {
-            value = IntegerLiteral.create(resultValue.intValue());
-            return value.execute();
-        } else {
-            value = DoubleLiteral.create(resultValue.doubleValue());
-            return value.execute();
-        }
+        return resultValue.doubleValue() % 1 == 0
+                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
     }
 
     @Override
     public String toString() {
-        return "(" + leftExpression.toString() + "+" + rightExpression.toString() + ")";
+        try {
+            return leftExpression.toString() + "+" + rightExpression.toString();
+        } catch (Exception e) {
+            return "**Inexpressible " + getClass().getName() + " result**";
+        }
     }
 
 }

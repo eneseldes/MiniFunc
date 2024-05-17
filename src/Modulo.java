@@ -1,8 +1,8 @@
 
 // Check Addition.java for comments
-public class Substraction extends ArithmeticBinaryExpression {
+public class Modulo extends ArithmeticBinaryExpression {
 
-    Substraction(Expression leftExpression, Expression rightExpression) {
+    Modulo(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
 
@@ -27,7 +27,16 @@ public class Substraction extends ArithmeticBinaryExpression {
             return null;
         }
 
-        Number resultValue = ((Number) leftExpression.getValue()).doubleValue() - ((Number) rightExpression.getValue()).doubleValue();
+        Double leftValue = ((Number) leftExpression.getValue()).doubleValue();
+        Double rightValue = ((Number) rightExpression.getValue()).doubleValue();
+        Number resultValue;
+
+        // Find modulo with recursion
+        if (leftValue < rightValue) {
+            resultValue = leftValue;
+        } else {
+            resultValue = (Number) new Modulo(new DoubleLiteral(leftValue - rightValue), new DoubleLiteral(rightValue)).getValue();
+        }
 
         return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
@@ -36,7 +45,7 @@ public class Substraction extends ArithmeticBinaryExpression {
     @Override
     public String toString() {
         try {
-            return leftExpression.toString() + "-" + rightExpression.toString();
+            return leftExpression.toString() + "%" + rightExpression.toString();
         } catch (Exception e) {
             return "**Inexpressible " + getClass().getName() + " result**";
         }

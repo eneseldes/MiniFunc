@@ -2,24 +2,28 @@
 // Check Addition.Java for comments
 public class Power extends ArithmeticBinaryExpression {
 
-    Literal value;
-
-    Power(Expression base, Expression exponent) {
-        super(base, exponent);
+    Power(Expression leftExpression, Expression rightExpression) {
+        super(leftExpression, rightExpression);
     }
 
     @Override
     Object getValue() {
-            execute();
-            return value.getValue();
+        try {
+            return execute().getValue();
 
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     Expression execute() {
         // Different from Addition. This class accepts only Number
-        if (!(leftExpression.getValue() instanceof Number) && !(rightExpression.getValue() instanceof Number)) {
-            System.out.println("Encountered improper value in " + getClass().getName() + ". Results may be inaccurate!");
+        if (leftExpression == null || rightExpression == null) {
+            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            return null;
+        } else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
+            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
             return null;
         }
 
@@ -36,26 +40,26 @@ public class Power extends ArithmeticBinaryExpression {
         
             The assigning value of 'resultValue' below is the code representation
             of the arithmetic expression above
-        */
-        Double resultValue =  root(pow(base, exponentNumerator), exponentDenominator);
+         */
+        Double exponentialResult = ((Number) pow(base, exponentNumerator).getValue()).doubleValue();
+        Number resultValue = root(exponentialResult, exponentDenominator);
 
-        value = resultValue % 1 == 0
-                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue);
-
-        return value.execute();
+        return resultValue.doubleValue() % 1 == 0
+                ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
     }
 
     // Takes nth order exponent recursively
-    Double pow(Double base, Integer exponent) {
+    Expression pow(Double base, Integer exponent) {
         if (exponent == 0) {
-            return 1.0;
+            return new IntegerLiteral(1);
         }
         // if exponent is negative, invert the number
         if (exponent < 0) {
-            return 1 / pow(base, -exponent);
+            return new Division(new IntegerLiteral(1), new Power(new DoubleLiteral(base), new IntegerLiteral(-exponent))).execute();
         }
-        
-        return base * pow(base, exponent - 1);
+
+        return new Multipication(new DoubleLiteral(base), new Power(new DoubleLiteral(base), new IntegerLiteral(exponent - 1))).execute();
+
     }
 
     // Finds greates common divisor
@@ -63,7 +67,7 @@ public class Power extends ArithmeticBinaryExpression {
         if (b == 0) {
             return a;
         }
-        
+
         return gcd(b, a % b);
     }
 
@@ -80,27 +84,25 @@ public class Power extends ArithmeticBinaryExpression {
 
         // Main logic of this method is as follows:
         // 0.75 --> 75 / 100 --> (using gcd) 3 / 4
-        
         int denominator = (int) Math.pow(10, decimalPlaces);
         int numerator = (int) (exponent * denominator);
         int gcd = gcd(numerator, denominator);
-        
+
         // Simplification
         numerator /= gcd;
         denominator /= gcd;
-        
+
         int[] exponentAsDecimal = {numerator, denominator};
         return exponentAsDecimal;
     }
 
     @Override
     public String toString() {
-        try{
-            return "power(" + leftExpression.toString() + "," + rightExpression.toString() + ")";
-        }
-        catch(Exception e){
+        try {
+            return "(" + leftExpression.toString() + "^" + rightExpression.toString() + ")";
+        } catch (Exception e) {
             return "**Inexpressible " + getClass().getName() + " result**";
         }
     }
-    
+
 }
