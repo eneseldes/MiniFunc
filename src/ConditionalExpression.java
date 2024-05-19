@@ -70,6 +70,6 @@ public class ConditionalExpression extends Expression {
                 (x1.getValue() instanceof String && x2.getValue() instanceof String)))){
              return "(" + x1 + " " + op + " " + x2 + ") = " + getValue();
         }
-       return getValue().toString();
+       return execute().toString();
     }
 }

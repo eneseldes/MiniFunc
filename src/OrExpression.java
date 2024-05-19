@@ -20,7 +20,6 @@ public class OrExpression extends Expression {
     Expression execute() {
         try {
             if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-
                 return new BooleanLiteral((boolean) x1.getValue() || (boolean) x2.getValue());
             } else {
                 throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
@@ -33,7 +32,7 @@ public class OrExpression extends Expression {
 
     @Override
     public String toString() {
-        if (x1.getValue() instanceof Boolean || x2.getValue() instanceof Boolean) {
+        if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
             return "( " + x1 + " or " + x2 + " ) = " + getValue();
         }
         return getValue().toString();

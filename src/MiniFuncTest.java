@@ -10,9 +10,9 @@ public class MiniFuncTest {
         TestCases.logicalExpression();
         TestCases.conditionalExpression();
         TestCases.ifExpression();*/
-        BooleanVariable a = new BooleanVariable("a", false);
-        BooleanLiteral b = new BooleanLiteral(true);
-        System.out.println(new XorExpression(a, b));
+        
+        System.out.println( new OrExpression(new BooleanLiteral(true), new StringLiteral("false")));
+       
         /// student test cases
         //StudentTestCases.testCase1();
         //StudentTestCases.testCase2();

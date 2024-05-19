@@ -5,7 +5,8 @@ enum ConditionalOperator {
     Less,
     LessEqual,
     Greater,
-    GreaterEqual;
+    GreaterEqual,
+    InstanceOf;
 
     @Override
     public String toString() {
@@ -22,6 +23,8 @@ enum ConditionalOperator {
                 return ">";
             case GreaterEqual:
                 return ">=";
+            case InstanceOf:
+                return"instanceof";
         }
 
         return super.toString();
