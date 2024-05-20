@@ -49,21 +49,27 @@ public class Power extends ArithmeticBinaryExpression {
     }
 
     // Takes nth order exponent recursively
-    Expression pow(Double base, Integer exponent) {
+    static Expression pow(Double base, Integer exponent) {
         if (exponent == 0) {
             return new IntegerLiteral(1);
         }
         // if exponent is negative, invert the number
         if (exponent < 0) {
-            return new Division(new IntegerLiteral(1), new Power(new DoubleLiteral(base), new IntegerLiteral(-exponent))).execute();
+            return new Division(new IntegerLiteral(1), 
+                    new Power(new DoubleLiteral(base), 
+                            new IntegerLiteral(-exponent)))
+                                .execute();
         }
 
-        return new Multipication(new DoubleLiteral(base), new Power(new DoubleLiteral(base), new IntegerLiteral(exponent - 1))).execute();
+        return new Multipication(new DoubleLiteral(base), 
+                new Power(new DoubleLiteral(base), 
+                        new IntegerLiteral(exponent - 1)))
+                            .execute();
 
     }
 
     // Finds greates common divisor
-    public static int gcd(int a, int b) {
+    static int gcd(int a, int b) {
         if (b == 0) {
             return a;
         }
@@ -72,12 +78,12 @@ public class Power extends ArithmeticBinaryExpression {
     }
 
     // Takes nth order root
-    Double root(Double base, Integer exponent) {
+    static Double root(Double base, Integer exponent) {
         return Math.pow(base, 1.0 / exponent);
     }
 
-    // Returns the denominator and numerator part of a decimal number
-    public static int[] getNumeratorAndDenominator(double exponent) {
+    // Returns the denominator and numerator part of a decimal number as array
+    static int[] getNumeratorAndDenominator(double exponent) {
         // Typecast the decimal number and take the length of the decimal part
         String decimalString = Double.toString(exponent);
         int decimalPlaces = decimalString.substring(decimalString.indexOf('.') + 1).length();
@@ -85,12 +91,12 @@ public class Power extends ArithmeticBinaryExpression {
         // Main logic of this method is as follows:
         // 0.75 --> 75 / 100 --> (using gcd) 3 / 4
         int denominator = (int) Math.pow(10, decimalPlaces);
-        int numerator = (int) (exponent * denominator);
+        int numerator = (int) new Multipication(new DoubleLiteral(exponent), new IntegerLiteral(denominator)).getValue();
         int gcd = gcd(numerator, denominator);
 
         // Simplification
-        numerator /= gcd;
-        denominator /= gcd;
+        numerator = (int) new Division(new IntegerLiteral(numerator), new IntegerLiteral(gcd)).getValue();
+        denominator = (int) new Division(new IntegerLiteral(denominator), new IntegerLiteral(gcd)).getValue();
 
         int[] exponentAsDecimal = {numerator, denominator};
         return exponentAsDecimal;

@@ -27,7 +27,7 @@ public class Negation extends ArithmeticUnaryExpression {
             return null;
         }
 
-        Number resultValue = -((Number) expression.getValue()).doubleValue();
+        Number resultValue = (Number)new Multipication(new IntegerLiteral(-1), expression).getValue();
 
         return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
