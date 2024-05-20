@@ -20,10 +20,10 @@ public class Power extends ArithmeticBinaryExpression {
     Expression execute() {
         // Different from Addition. This class accepts only Number
         if (leftExpression == null || rightExpression == null) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            System.out.println("Encountered null expression on " + getClass().getSimpleName() + " operation. Results may be inaccurate!");
             return null;
         } else if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            System.out.println("Encountered non-number expression on " + getClass().getSimpleName() + " operation. Results may be inaccurate!");
             return null;
         }
 
@@ -101,14 +101,5 @@ public class Power extends ArithmeticBinaryExpression {
         int[] exponentAsDecimal = {numerator, denominator};
         return exponentAsDecimal;
     }
-
-    @Override
-    public String toString() {
-        try {
-            return "(" + leftExpression.toString() + "^" + rightExpression.toString() + ")";
-        } catch (Exception e) {
-            return "**Inexpressible " + getClass().getName() + " result**";
-        }
-    }
-
+    
 }

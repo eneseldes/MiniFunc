@@ -20,10 +20,10 @@ public class Negation extends ArithmeticUnaryExpression {
     Expression execute() {
         // Different from Addition. This class accepts only Number
         if (expression == null) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            System.out.println("Encountered null expression on " + getClass().getSimpleName() + " operation. Results may be inaccurate!");
             return null;
         } else if (!(expression.getValue() instanceof Number)) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            System.out.println("Encountered non-number expression on " + getClass().getSimpleName() + " operation. Results may be inaccurate!");
             return null;
         }
 
@@ -35,11 +35,14 @@ public class Negation extends ArithmeticUnaryExpression {
 
     @Override
     public String toString() {
-        try {
-            return "-(" + expression.toString() + ")";
-        } catch (Exception e) {
-            return "**Inexpressible " + getClass().getName() + " result**";
+        if (expression == null) {
+            return "**Inexpressible " + getClass().getSimpleName() + " result due to null value**";
         }
+        if (!(expression.getValue() instanceof Number)) {
+            return "((Improper Calculation Here...) -" + expression.toString() + ")";
+        }
+        
+        return "(-" + expression.toString() + ")";
     }
 
 }
