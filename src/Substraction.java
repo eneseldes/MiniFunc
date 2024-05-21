@@ -10,7 +10,6 @@ public class Substraction extends ArithmeticBinaryExpression {
     Object getValue() {
         try {
             return execute().getValue();
-
         } catch (Exception e) {
             return null;
         }

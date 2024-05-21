@@ -43,12 +43,12 @@ public abstract class ArithmeticBinaryExpression extends ArithmeticExpression {
                 break;
         }
         
-        if (leftExpression == null || rightExpression == null) {
-            return "**Inexpressible " + getClass().getSimpleName() + " result due to null value**";
-        }
-        if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
+        if (leftExpression == null || rightExpression == null)
+            return "??Inexpressible " + getClass().getSimpleName() + " result due to null value??";
+        
+        if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number))
             return "((Improper Calculation Here...)" + leftExpression.toString() + operator + rightExpression.toString() + ")";
-        }
+        
         
         return "(" + leftExpression.toString() + operator + rightExpression.toString() + ")";
     }

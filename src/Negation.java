@@ -10,7 +10,6 @@ public class Negation extends ArithmeticUnaryExpression {
     Object getValue() {
         try {
             return execute().getValue();
-
         } catch (Exception e) {
             return null;
         }
@@ -35,12 +34,12 @@ public class Negation extends ArithmeticUnaryExpression {
 
     @Override
     public String toString() {
-        if (expression == null) {
-            return "**Inexpressible " + getClass().getSimpleName() + " result due to null value**";
-        }
-        if (!(expression.getValue() instanceof Number)) {
+        if (expression == null)
+            return "??Inexpressible " + getClass().getSimpleName() + " result due to null value??";
+        
+        if (!(expression.getValue() instanceof Number))
             return "((Improper Calculation Here...) -" + expression.toString() + ")";
-        }
+        
         
         return "(-" + expression.toString() + ")";
     }

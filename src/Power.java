@@ -10,7 +10,6 @@ public class Power extends ArithmeticBinaryExpression {
     Object getValue() {
         try {
             return execute().getValue();
-
         } catch (Exception e) {
             return null;
         }
@@ -50,9 +49,9 @@ public class Power extends ArithmeticBinaryExpression {
 
     // Takes nth order exponent recursively
     static Expression pow(Double base, Integer exponent) {
-        if (exponent == 0) {
+        if (exponent == 0)
             return new IntegerLiteral(1);
-        }
+        
         // if exponent is negative, invert the number
         if (exponent < 0) {
             return new Division(new IntegerLiteral(1), 

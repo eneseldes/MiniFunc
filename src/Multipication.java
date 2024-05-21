@@ -10,7 +10,6 @@ public class Multipication extends ArithmeticBinaryExpression {
     Object getValue() {
         try {
             return execute().getValue();
-
         } catch (Exception e) {
             return null;
         }

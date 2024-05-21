@@ -38,7 +38,7 @@ public class Absolute extends ArithmeticUnaryExpression {
     @Override
     public String toString() {
         if (expression == null) {
-            return "**Inexpressible " + getClass().getName() + " result due to null value**";
+            return "??Inexpressible " + getClass().getName() + " result due to null value??";
         }
         if (!(expression.getValue() instanceof Number)) {
             return "((Improper Calculation Here...) -" + expression.toString() + ")";

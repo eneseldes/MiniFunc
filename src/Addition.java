@@ -10,7 +10,6 @@ public class Addition extends ArithmeticBinaryExpression {
     Object getValue() {
         try {
             return execute().getValue();
-
         } catch (Exception e) {
             return null;
         }
@@ -29,9 +28,9 @@ public class Addition extends ArithmeticBinaryExpression {
         Object rightValue = rightExpression.getValue();
 
         // If one of the value is String, do concatenation
-        if (leftValue instanceof String || rightValue instanceof String) {
+        if (leftValue instanceof String || rightValue instanceof String)
             return StringLiteral.create("" + leftValue + rightValue);
-        }
+        
 
         // If values' data types are not int or double -also string-, throw exception
         if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
@@ -57,7 +56,7 @@ public class Addition extends ArithmeticBinaryExpression {
     @Override
     public String toString() {
         if (leftExpression == null || rightExpression == null) {
-            return "**Inexpressible " + getClass().getSimpleName() + " result due to null value**";
+            return "??Inexpressible " + getClass().getSimpleName() + " result due to null value??";
         }
         if (leftExpression.getValue() instanceof Number || rightExpression.getValue() instanceof Number
                 || leftExpression.getValue() instanceof String || rightExpression.getValue() instanceof String) {

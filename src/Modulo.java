@@ -10,7 +10,6 @@ public class Modulo extends ArithmeticBinaryExpression {
     Object getValue() {
         try {
             return execute().getValue();
-
         } catch (Exception e) {
             return null;
         }
@@ -32,11 +31,11 @@ public class Modulo extends ArithmeticBinaryExpression {
         Number resultValue;
 
         // Find modulo with recursion
-        if (leftValue < rightValue) {
+        if (leftValue < rightValue)
             resultValue = leftValue;
-        } else {
+        else
             resultValue = (Number) new Modulo(new DoubleLiteral(leftValue - rightValue), new DoubleLiteral(rightValue)).getValue();
-        }
+        
 
         return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
