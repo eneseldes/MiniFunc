@@ -21,6 +21,9 @@ public class ConditionalExpression extends Expression {
     @Override
     Expression execute() {
         try {
+            if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean && op == ConditionalOperator.Equal) {
+                return new BooleanLiteral(x1.getValue() == x2.getValue());
+            }
             if (x1.getValue() instanceof Number) {
                 a = ((Number) x1.getValue()).doubleValue();
                 if (x2.getValue() instanceof Number) {
