@@ -28,7 +28,8 @@ public class Absolute extends ArithmeticUnaryExpression {
         }
 
         Double inputValue = ((Number) expression.getValue()).doubleValue();
-        Number resultValue = inputValue >= 0 ? inputValue : -inputValue;
+        Number resultValue = inputValue >= 0 ?
+                inputValue : (Number)new Negation(expression).getValue();
 
         return resultValue.doubleValue() % 1 == 0
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
@@ -36,11 +37,14 @@ public class Absolute extends ArithmeticUnaryExpression {
 
     @Override
     public String toString() {
-        try {
-            return "|" + expression.toString() + "|";
-        } catch (Exception e) {
-            return "**Inexpressible " + getClass().getName() + " result**";
+        if (expression == null) {
+            return "**Inexpressible " + getClass().getName() + " result due to null value**";
         }
+        if (!(expression.getValue() instanceof Number)) {
+            return "((Improper Calculation Here...) -" + expression.toString() + ")";
+        }
+        
+        return "(-" + expression.toString() + ")";
     }
 
 }

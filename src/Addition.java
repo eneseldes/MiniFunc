@@ -21,7 +21,7 @@ public class Addition extends ArithmeticBinaryExpression {
     Expression execute() {
         // If one of the expression is null, do not assign field 'value' and return null
         if (leftExpression == null || rightExpression == null) {
-            System.out.println("Encountered null expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            System.out.println("Encountered null expression on " + getClass().getSimpleName() + " operation. Results may be inaccurate!");
             return null;
         }
 
@@ -35,7 +35,7 @@ public class Addition extends ArithmeticBinaryExpression {
 
         // If values' data types are not int or double -also string-, throw exception
         if (!(leftExpression.getValue() instanceof Number) || !(rightExpression.getValue() instanceof Number)) {
-            System.out.println("Encountered non-number expression on " + getClass().getName() + " operation. Results may be inaccurate!");
+            System.out.println("Encountered non-number expression on " + getClass().getSimpleName() + " operation. Results may be inaccurate!");
             return null;
         }
 
@@ -53,13 +53,18 @@ public class Addition extends ArithmeticBinaryExpression {
                 ? IntegerLiteral.create(resultValue.intValue()) : DoubleLiteral.create(resultValue.doubleValue());
     }
 
+    // Overrode in this class because Addition should also accept String input
     @Override
     public String toString() {
-        try {
-            return leftExpression.toString() + "+" + rightExpression.toString();
-        } catch (Exception e) {
-            return "**Inexpressible " + getClass().getName() + " result**";
+        if (leftExpression == null || rightExpression == null) {
+            return "**Inexpressible " + getClass().getSimpleName() + " result due to null value**";
         }
+        if (leftExpression.getValue() instanceof Number || rightExpression.getValue() instanceof Number
+                || leftExpression.getValue() instanceof String || rightExpression.getValue() instanceof String) {
+            return "(" + leftExpression.toString() + "+" + rightExpression.toString() + ")";
+        }
+        
+        return "((Improper Calculation Here...)" + leftExpression.toString() + "+" + rightExpression.toString() + ")";
     }
 
 }
