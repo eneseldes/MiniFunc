@@ -24,7 +24,7 @@ enum ConditionalOperator {
             case GreaterEqual:
                 return ">=";
             case InstanceOf:
-                return"instanceof";
+                return "InstanceOf";
         }
 
         return super.toString();

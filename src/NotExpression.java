@@ -15,11 +15,8 @@ public class NotExpression extends Expression {
     @Override
     Expression execute() {
         try {
-            if (value.getValue() instanceof Boolean) {
-                return new BooleanLiteral(!(boolean) value.getValue());
-            } else {
-                throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
-            }
+            return new IfExpression(new ConditionalExpression(value, new StringLiteral("BooleanLiteral"), ConditionalOperator.InstanceOf),
+            new BooleanLiteral(!(boolean) value.getValue()), new ExceptionExpression("NotExpression", new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ")));
         } catch (Exception e) {
             System.out.println(getClass().getSimpleName() + " " + e);
         }
@@ -31,7 +28,7 @@ public class NotExpression extends Expression {
         if (value.getValue() instanceof Boolean) {
             return "(" + getValue() + ")";
         }
-        return getValue().toString();
+        return "**Inexpressible " + getClass().getName() + " result** " +execute();
 
     }
 

@@ -16,7 +16,7 @@ public class AndExpression extends Expression {
 
     @Override
     Expression execute() {
-        try {
+        try {            
             if (x1 == null || x2 == null) {
                 throw new NullPointerException(" An expression is null!! ");
             } else if(x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean){
@@ -34,8 +34,8 @@ public class AndExpression extends Expression {
     @Override
     public String toString() {
         if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-          return "( " + x1 + " and " + x2 + " ) = " + getValue();
+          return "( " + x1 + " and " + x2 + " )";
         }
-        return getValue().toString();
+        return "**Inexpressible " + getClass().getName() + " result** " +execute();
     }
 }

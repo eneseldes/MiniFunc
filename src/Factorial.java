@@ -15,14 +15,14 @@ public class Factorial extends Function {
 
     @Override
     Expression execute() {
-        try {
+        try {            
             if (expression.getValue() instanceof Number) {
-                this.number = ((Number) expression.getValue()).intValue();
+                this.number = ((Number) expression.getValue()).intValue();                
                 if (number < 0) {
                     throw new IllegalArgumentException(" Enter a positive number!!");
                 } else if (number % 1 == 0) {
                     if ((boolean) new ConditionalExpression(new IntegerLiteral(number), new IntegerLiteral(1), ConditionalOperator.Greater).getValue()) {
-                        return new Multipication(expression, new Factorial(new IntegerLiteral(number - 1)).execute());
+                        return new Multipication(expression, new Factorial(new IntegerLiteral(number - 1))).execute();
                     } else {
                         return new IntegerLiteral(1);
                     }
@@ -45,7 +45,7 @@ public class Factorial extends Function {
                 return expression.getValue() + "! = " + getValue();
             }
         }
-        return getValue().toString();
+        return "**Inexpressible " + getClass().getName() + " result** " +execute();
     }
 
 }

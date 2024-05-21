@@ -33,9 +33,9 @@ public class OrExpression extends Expression {
     @Override
     public String toString() {
         if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-            return "( " + x1 + " or " + x2 + " ) = " + getValue();
+            return "( " + x1 + " or " + x2 + " )" ;
         }
-        return getValue().toString();
+        return "**Inexpressible " + getClass().getName() + " result** " +execute();
     }
 
 }

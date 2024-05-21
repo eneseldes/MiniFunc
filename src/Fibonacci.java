@@ -5,9 +5,9 @@ public class Fibonacci extends Function {
 
     List<Integer> fibonacciList = new ArrayList<>();
     Expression term;
-    private int termInt;
-    private int firstTerm = 1;
-    private int secondTerm = 1;
+    private Integer termInt;
+    private Integer firstTerm = 1;
+    private Integer secondTerm = 1;
 
     Fibonacci(Expression term) {
         this.term = term;
@@ -18,7 +18,7 @@ public class Fibonacci extends Function {
         }
     }
 
-    private Fibonacci(int firstTerm, int secondTerm, int termInt, Expression term, List fibonacciList) {
+    private Fibonacci(Integer firstTerm, Integer secondTerm, Integer termInt, Expression term, List fibonacciList) {
         this.firstTerm = firstTerm;
         this.secondTerm = secondTerm;
         this.termInt = termInt;
@@ -44,7 +44,7 @@ public class Fibonacci extends Function {
                 }
                 if (termInt - 1 > 1) {
                     return new Fibonacci(secondTerm, (Integer) new Addition(new IntegerLiteral(firstTerm),
-                            new IntegerLiteral(secondTerm)).getValue(), (Integer) new Substraction(new IntegerLiteral(termInt), new IntegerLiteral(1)).getValue(),
+                            new IntegerLiteral(secondTerm)).getValue(),termInt-1,
                             term, fibonacciList).execute();
                 } else {
                     return new IntegerLiteral(secondTerm);
@@ -73,7 +73,7 @@ public class Fibonacci extends Function {
                 return sb.toString();
             }
         }
-        return getValue().toString();
+        return "**Inexpressible " + getClass().getName() + " result** " +execute();
 
     }
 }

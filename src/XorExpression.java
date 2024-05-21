@@ -34,9 +34,9 @@ public class XorExpression extends Expression {
     @Override
     public String toString() {
         if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-            return "( " + x1 + " xor " + x2 + " ) = " + getValue();
+            return "( " + x1 + " xor " + x2 + " )";
         }
-        return getValue().toString();
+        return "**Inexpressible " + getClass().getName() + " result** " +execute();
     }
 
 }
