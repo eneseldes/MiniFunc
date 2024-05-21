@@ -58,8 +58,10 @@ public class Addition extends ArithmeticBinaryExpression {
         if (leftExpression == null || rightExpression == null) {
             return "??Inexpressible " + getClass().getSimpleName() + " result due to null value??";
         }
-        if (leftExpression.getValue() instanceof Number || rightExpression.getValue() instanceof Number
-                || leftExpression.getValue() instanceof String || rightExpression.getValue() instanceof String) {
+        
+        // Print result correctly, just when both left and right expressions are String OR Number
+        if ((leftExpression.getValue() instanceof Number || leftExpression.getValue() instanceof String)
+                && (rightExpression.getValue() instanceof Number ||  rightExpression.getValue() instanceof String)) {
             return "(" + leftExpression.toString() + "+" + rightExpression.toString() + ")";
         }
         
