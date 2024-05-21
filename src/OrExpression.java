@@ -1,6 +1,5 @@
 
-public class OrExpression extends Expression {
-
+public class OrExpression extends LogicalExpression {
     Expression x1;
     Expression x2;
 

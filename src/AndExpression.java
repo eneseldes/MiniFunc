@@ -1,6 +1,5 @@
 
-public class AndExpression extends Expression {
-
+public class AndExpression extends LogicalExpression {
     Expression x1;
     Expression x2;
 
