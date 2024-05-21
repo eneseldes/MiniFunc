@@ -1,9 +1,5 @@
 
 public class IfExpression extends Expression {
-
-    // Result of the expression
-    Expression value;
-
     // Condition and expressions that are going to be returned according to condition
     ConditionalExpression conditionalExpression;
     Expression ifStep;
@@ -18,25 +14,24 @@ public class IfExpression extends Expression {
     // Getting value
     @Override
     Object getValue() {
-        execute();
-        return value.getValue();
+        return execute().getValue();
     }
 
     // Assigning and calculating
     @Override
     Expression execute() {
         // Assign the field 'value' to the expression that are going to be returned
-        if ((boolean) conditionalExpression.getValue()) {
-            value = ifStep;
-            return ifStep.execute();
-        } else {
-            value = elseStep;
-            return elseStep.execute();
-        }
+        if ((boolean) conditionalExpression.getValue())
+            return ifStep;
+        else
+            return elseStep;
     }
 
     @Override
     public String toString() {
+        if (conditionalExpression == null || ifStep == null || elseStep == null)
+            return "??Inexpressible " + getClass().getName() + " result due to null value??";
+        
         return "if(" + conditionalExpression.toString() + ") { " + ifStep.toString() + " } else { " + elseStep.toString() + " }";
     }
 }
