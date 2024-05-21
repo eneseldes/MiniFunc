@@ -44,7 +44,7 @@ public class Fibonacci extends Function {
                 }
                 if (termInt - 1 > 1) {
                     return new Fibonacci(secondTerm, (Integer) new Addition(new IntegerLiteral(firstTerm),
-                            new IntegerLiteral(secondTerm)).getValue(),termInt-1,
+                            new IntegerLiteral(secondTerm)).getValue(),(Integer) new Substraction(new IntegerLiteral(termInt), new IntegerLiteral(1)).getValue(),
                             term, fibonacciList).execute();
                 } else {
                     return new IntegerLiteral(secondTerm);
