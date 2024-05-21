@@ -2,8 +2,8 @@
 public class StudentTestCases {
 
     static void testCase1(){
-        System.out.println("Test Case 1");
-        System.out.println("--------------");
+        System.out.println("Test Case 1 --> A Physics Question");
+        System.out.println("----------------------------------");
         
         Expression gravity = new DoubleVariable("gravity", 9.8);
         Expression height = new IntegerVariable("height", 20);
@@ -27,8 +27,8 @@ public class StudentTestCases {
     }
     
     static void testCase2() {
-        System.out.println("Test Case 2");
-        System.out.println("--------------");
+        System.out.println("Test Case 2 --> Loan Calculation");
+        System.out.println("----------------------------------");
         
         // basic array structure: client name, loanAmount, isReliable
         Object[] odin = {"Odin", 10000, true};
@@ -58,6 +58,8 @@ public class StudentTestCases {
         System.out.println(loki[0] + " takes out " + loki[1] + " liras loan.");
         System.out.println("-> Since he is NOT reliable, his refund amount increased to " + getInterestRate(loki) + ".");
         System.out.printf("---> Total Refund Amount: %.2f TL\n", getRefundAmount(loki));
+        
+        System.out.println();
     }
 
     // method of testCase2()
@@ -93,4 +95,42 @@ public class StudentTestCases {
         
         return ((Number)new Multipication(loanAmount, interestRate).getValue()).doubleValue();
     }
+    
+    static void testCase3(){
+        System.out.println("Test Case 3 --> Exception Handling");
+        System.out.println("----------------------------------");
+        
+        Expression num1 = new IntegerLiteral(25);
+        Expression num2 = new DoubleLiteral(0.5);
+        Expression bool = new BooleanLiteral(true);
+        Expression sentence = new StringLiteral("ceng114");
+        Expression nullValue = null;
+        
+        Expression correctResult1 = new Power(num1, num2);
+        System.out.println(correctResult1 + " = " + correctResult1.getValue());
+        
+        System.out.println();
+        
+        Expression correctResult2 = new Addition(num1, sentence);
+        System.out.println(correctResult2 + " = " + correctResult2.getValue());
+        
+        System.out.println();
+        
+        Expression wrongResult1 = new Addition(num1, bool);
+        System.out.println(wrongResult1 + " = " + wrongResult1.getValue());
+        
+        System.out.println();
+        
+        Expression wrongResult2 = new Power(num1, new Multipication(num1, bool));
+        System.out.println(wrongResult2 + " = " + wrongResult2.getValue());
+        
+        System.out.println();
+        
+        // Let's make it more complicated
+        Expression wrongResult3 = new Power(num1, new Addition(new Multipication(nullValue, num1), bool));
+        System.out.println(wrongResult3 + " = " + wrongResult3.getValue());
+        
+        System.out.println();
+    }
+    
 }
