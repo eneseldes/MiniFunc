@@ -1,6 +1,5 @@
 
-public class NotExpression extends Expression {
-
+public class NotExpression extends LogicalExpression {
     Expression value;
 
     NotExpression(Expression value) {

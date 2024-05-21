@@ -1,6 +1,5 @@
 
-public class XorExpression extends Expression {
-
+public class XorExpression extends LogicalExpression {
     Expression x1;
     Expression x2;
 

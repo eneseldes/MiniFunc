@@ -3,19 +3,14 @@ public class ConditionalExpression extends Expression {
 
     Expression x1;
     Expression x2;
-    String className;
     private Number a;
     private Number b;
     ConditionalOperator op;
-    Boolean boolCheck = false;
 
     ConditionalExpression(Expression x1, Expression x2, ConditionalOperator op) {
         this.x1 = x1;
         this.x2 = x2;
         this.op = op;
-        if(op.name().equals("InstanceOf")){
-            this.boolCheck=true;
-        }
     }
 
     @Override
@@ -26,8 +21,8 @@ public class ConditionalExpression extends Expression {
     @Override
     Expression execute() {
         try {
-            if(boolCheck==true){    
-                return new BooleanLiteral(x1.getClass().getName().equals(x2.getValue()));
+            if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean && op == ConditionalOperator.Equal) {
+                return new BooleanLiteral(x1.getValue() == x2.getValue());
             }
             if (x1.getValue() instanceof Number) {
                 a = ((Number) x1.getValue()).doubleValue();
@@ -43,17 +38,13 @@ public class ConditionalExpression extends Expression {
                             return new BooleanLiteral((x1.getValue().equals(x2.getValue())));
                         case "NotEqual":
                             return new BooleanLiteral((!x1.getValue().equals(x2.getValue())));
-                        
                     }
                     throw new IllegalArgumentException(" Invalid operator entered!! ");
                 }
-
                 throw new IllegalArgumentException(" Expressions are different type!! ");
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException(" Invalid variable entered!! ");
             }
-
         } catch (Exception e) {
             System.out.println(getClass().getSimpleName() + " " + e);
             return new StringLiteral("");
@@ -78,12 +69,10 @@ public class ConditionalExpression extends Expression {
 
     @Override
     public String toString() {
-        if ((((x1.getValue() instanceof Number && x2.getValue() instanceof Number)
-                || (x1.getValue() instanceof String && x2.getValue() instanceof String)))) {
-            return "(" + x1 + " " + op + " " + x2 + ") = " + getValue();
-        } else if (className != null) {
-            return "(" + x1 + " " + op + " " + className + ") = ";
+        if((((x1.getValue() instanceof Number && x2.getValue() instanceof Number) || 
+                (x1.getValue() instanceof String && x2.getValue() instanceof String)))){
+             return "(" + x1 + " " + op + " " + x2 + ") = " + getValue();
         }
-        return "**Inexpressible " + getClass().getName() + " result** " + execute();
+       return execute().toString();
     }
 }
