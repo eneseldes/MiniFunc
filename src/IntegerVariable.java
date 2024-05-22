@@ -32,6 +32,10 @@ public class IntegerVariable extends Variable {
         IntegerVariable intVar = (IntegerVariable) var;
         value = intVar.value;
     }
+    
+    void assign(Number number){
+        value = number.intValue();
+    }
 
     @Override
     public String toString() {

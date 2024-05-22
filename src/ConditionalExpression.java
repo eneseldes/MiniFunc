@@ -22,10 +22,11 @@ public class ConditionalExpression extends Expression {
     Expression execute() {
         try {
             //Here the types of expressions were checked. If their expressions types are not same or expressions are not number&string exception is thrown
-            if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean && op == ConditionalOperator.Equal) {
-                //If they are boolean and operator is equal operator result is returned as BooleanLiteral
+            if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean && op == ConditionalOperator.Equal)
                 return new BooleanLiteral(x1.getValue() == x2.getValue());
-            }
+            if (x1.getValue() instanceof Character && x2.getValue() instanceof Character && op == ConditionalOperator.Equal)
+                return new BooleanLiteral(x1.getValue() == x2.getValue());
+            
             if (x1.getValue() instanceof Number) {
                 if (x2.getValue() instanceof Number) {
                     //If they are number, Their values were saved as double

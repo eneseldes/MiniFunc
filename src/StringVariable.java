@@ -32,6 +32,10 @@ public class StringVariable extends Variable {
         StringVariable strVar = (StringVariable) var;
         value = new String(strVar.value);
     }
+    
+    void assign(String sentence){
+        value = sentence;
+    }
 
     @Override
     public String toString() {

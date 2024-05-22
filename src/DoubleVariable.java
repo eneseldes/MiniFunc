@@ -32,6 +32,10 @@ public class DoubleVariable extends Variable {
         DoubleVariable doubleVar = (DoubleVariable) var;
         value = doubleVar.value;
     }
+    
+    void assign(Number number){
+        value = number.doubleValue();
+    }
 
     @Override
     public String toString() {
