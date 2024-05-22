@@ -35,8 +35,8 @@ public abstract class ArithmeticBinaryExpression extends ArithmeticExpression {
             case "Power":
                 operator = "^";
                 break;
-            case "Substraction":
-                operator = "/";
+            case "Subtraction":
+                operator = "-";
                 break;
             default:
                 operator = "Unknown Operator";
