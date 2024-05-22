@@ -1,11 +1,11 @@
 
 public class ConditionalExpression extends Expression {
 
-    Expression x1;
-    Expression x2;
+    private Expression x1;
+    private Expression x2;
     private Number a;
     private Number b;
-    ConditionalOperator op;
+    private ConditionalOperator op;
 
     ConditionalExpression(Expression x1, Expression x2, ConditionalOperator op) {
         this.x1 = x1;
@@ -21,18 +21,22 @@ public class ConditionalExpression extends Expression {
     @Override
     Expression execute() {
         try {
+            //Here the types of expressions were checked. If their expressions types are not same or expressions are not number&string exception is thrown
             if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean && op == ConditionalOperator.Equal) {
+                //If they are boolean and operator is equal operator result is returned as BooleanLiteral
                 return new BooleanLiteral(x1.getValue() == x2.getValue());
             }
             if (x1.getValue() instanceof Number) {
-                a = ((Number) x1.getValue()).doubleValue();
                 if (x2.getValue() instanceof Number) {
+                    //If they are number, Their values were saved as double
+                    a = ((Number) x1.getValue()).doubleValue();
                     b = ((Number) x2.getValue()).doubleValue();
                 } else {
                     throw new IllegalArgumentException(" Expressions are different type!! ");
                 }
             } else if (x1.getValue() instanceof String) {
                 if (x2.getValue() instanceof String) {
+                    // If they were both strings, the operator was checked to see if it was equal or not equal. 
                     switch (op.name()) {
                         case "Equal":
                             return new BooleanLiteral((x1.getValue().equals(x2.getValue())));
@@ -49,7 +53,7 @@ public class ConditionalExpression extends Expression {
             System.out.println(getClass().getSimpleName() + " " + e);
             return new StringLiteral("");
         }
-
+        // If both are numbers, the operator is checked and the answer is returned
         switch (op.name()) {
             case "Equal":
                 return new BooleanLiteral(a.doubleValue() == b.doubleValue());
@@ -69,10 +73,10 @@ public class ConditionalExpression extends Expression {
 
     @Override
     public String toString() {
-        if((((x1.getValue() instanceof Number && x2.getValue() instanceof Number) || 
-                (x1.getValue() instanceof String && x2.getValue() instanceof String)))){
-             return "(" + x1 + " " + op + " " + x2 + ") = " + getValue();
+        if ((((x1.getValue() instanceof Number && x2.getValue() instanceof Number)
+                || (x1.getValue() instanceof String && x2.getValue() instanceof String)))) {
+            return "(" + x1 + " " + op + " " + x2 + ") = " + getValue();
         }
-       return execute().toString();
+        return execute().toString();
     }
 }

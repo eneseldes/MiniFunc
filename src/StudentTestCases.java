@@ -132,5 +132,41 @@ public class StudentTestCases {
         
         System.out.println();
     }
+    static void testCase4(){
+        System.out.println("Test Case 4 --> Logic Expressions");
+        System.out.println("---------------------------------");
+        
+        System.out.println("QUESTION: A=1 B=0, ((AB) + B)' + (A'B + AB')= ? ");
+        BooleanLiteral a = new BooleanLiteral(true);
+        BooleanLiteral b = new BooleanLiteral(false);
+        BooleanLiteral ab = new BooleanLiteral((Boolean)new AndExpression(a,b).getValue());
+        System.out.println("Firstly, AB means is  A AND B , so A and B is -->" +ab );
+        BooleanLiteral abOrB = new BooleanLiteral((Boolean)new OrExpression(ab, b).getValue()); 
+        System.out.println("Then AB + B means is AB OR B, AB--> " +ab +", B-->"+b +", AB OR B --> " +abOrB);
+        BooleanLiteral abOrBNot = new BooleanLiteral((Boolean) new NotExpression(abOrB).getValue());
+        System.out.println("And ' means is NOT gate so (AB + B)' is --> " +abOrBNot);
+        BooleanLiteral aXorB = new BooleanLiteral((Boolean) new XorExpression(a,b).getValue());
+        System.out.println("In the second part (A'B + AB') means is A XOR B, so A XOR B --> " +aXorB);
+        BooleanLiteral result = new BooleanLiteral((Boolean) new OrExpression(abOrBNot, aXorB).getValue());
+        System.out.println("Finally, ((AB) + B)' + (A'B + AB')--> " +result);
+               
+    }
+    
+    static void testCase5(){
+        System.out.println("Test Case 5 --> Factorial, Prime Number and Fibonacci");
+        System.out.println("-----------------------------------------------------");
+        
+        System.out.println("QUESTION: 132*n! = (n+2)*(n+1)*n*(n-1)! \n a) n=? and (n-3)!=? \n b) What is the nth term of Fibonacci serie \n c) Is n prime? If it is not find the closest prime number to n. ");
+        Expression n = new IntegerLiteral(10);
+        System.out.println("n*(n-1)! = n! so 132 = (n+2)*(n+1) According to this equation ");
+        Expression fac = new Factorial(new Substraction(n ,new IntegerLiteral(3)));       
+        System.out.println("a) n=" +n +" and (n-3)!= " +fac.getValue());
+        Expression fib = new Fibonacci(n);
+        System.out.println("b) nth term of Fibonacci = " +fib.getValue());
+        Expression prime = new PrimeNumber(n);
+        Expression prime2 = new PrimeNumber(new IntegerLiteral((Integer)new Substraction(n, new IntegerLiteral(1)).getValue()));
+        Expression prime3 = new PrimeNumber(new IntegerLiteral((Integer)new Addition(n, new IntegerLiteral(1)).getValue()));
+        System.out.println("c) " + prime.getValue() +" According to this answer we should find the closest prime number. Firstly we should look at the n+1 and n-1, " +prime2 +" " +prime3);
+    }
     
 }

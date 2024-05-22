@@ -1,7 +1,7 @@
 
 public class PrimeNumber extends Function {
 
-    Expression number;
+    private Expression number;
     private Integer divisor = 2;
     private Boolean isPrime;
     private Double numberDouble;
@@ -9,13 +9,13 @@ public class PrimeNumber extends Function {
     PrimeNumber(Expression number) {
         this.number = number;
         if (number.getValue() instanceof Number) {
-
             numberDouble = ((Number) number.getValue()).doubleValue();
-
         }
     }
 
-    private PrimeNumber(Double numberDouble, Integer divisor) {
+    private PrimeNumber(Double numberDouble, Integer divisor, Expression number) {
+        //This constructor is being used to do recursion
+        this.number = number;
         this.divisor = divisor;
         this.numberDouble = numberDouble;
     }
@@ -28,19 +28,24 @@ public class PrimeNumber extends Function {
     @Override
     Expression execute() {
         try {
+            //Here the type of expression is checked.If expression's type is a boolean, exception is thrown
             if (number.getValue() instanceof Number) {
+                //If number is a double number,like 4.2, false is returned
                 if (numberDouble % 1 != 0) {
                     return new BooleanLiteral(false);
                 }
-
+                //We check if divisor is smaller than the number
                 if ((Boolean) new ConditionalExpression(new IntegerLiteral(divisor), new DoubleLiteral(numberDouble), ConditionalOperator.Less).getValue()) {
+                    //If the remainder is equal to 0, it means that it is not the prime number, so we return false
                     if (numberDouble % divisor == 0) {
                         return new BooleanLiteral(false);
-                    } else {
+                    } //If it is not we return new Prime Number
+                    else {
                         return new PrimeNumber(numberDouble, (Integer) new Addition(new DoubleLiteral(divisor),
-                                new DoubleLiteral(1.0)).getValue()).execute();
+                                new DoubleLiteral(1.0)).getValue(), number).execute();
                     }
-                } else if (numberDouble == 1) {
+                } //We checked here if the number is less equal than 1 so it is not prime number
+                else if ((Boolean) new ConditionalExpression(new DoubleLiteral(numberDouble), new IntegerLiteral(1), ConditionalOperator.LessEqual).getValue()) {
                     return new BooleanLiteral(false);
                 }
                 return new BooleanLiteral(true);
@@ -55,8 +60,8 @@ public class PrimeNumber extends Function {
     }
 
     public String toString() {
-        if(number.getValue() instanceof Number){
-            return "Is " +number.getValue() +" is prime? " +getValue();
+        if (number.getValue() instanceof Number) {
+            return "Is " + number.getValue() + " prime? " + getValue();
         }
         return getValue().toString();
     }

@@ -1,7 +1,8 @@
 
 public class AndExpression extends LogicalExpression {
-    Expression x1;
-    Expression x2;
+
+    private Expression x1;
+    private Expression x2;
 
     AndExpression(Expression x1, Expression x2) {
         this.x1 = x1;
@@ -15,13 +16,14 @@ public class AndExpression extends LogicalExpression {
 
     @Override
     Expression execute() {
-        try {            
+        try {
+            //First, we check the type of expressions here. If it is not BooleanLiteral or BooleanVariable exception is thrown. 
             if (x1 == null || x2 == null) {
                 throw new NullPointerException(" An expression is null!! ");
-            } else if(x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean){
+            } else if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
+                //Here if it is a Boolean, And gate process is done and returned as a BooleanLiteral.
                 return new BooleanLiteral((boolean) x1.getValue() && (boolean) x2.getValue());
-            }
-            else{
+            } else {
                 throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
             }
         } catch (Exception e) {
@@ -33,8 +35,8 @@ public class AndExpression extends LogicalExpression {
     @Override
     public String toString() {
         if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-          return "( " + x1 + " and " + x2 + " )";
+            return "( " + x1 + " and " + x2 + " )";
         }
-        return "**Inexpressible " + getClass().getName() + " result** " +execute();
+        return "**Inexpressible " + getClass().getName() + " result** " + execute();
     }
 }

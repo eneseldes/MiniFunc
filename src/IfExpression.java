@@ -1,9 +1,10 @@
 
 public class IfExpression extends Expression {
+
     // Condition and expressions that are going to be returned according to condition
-    ConditionalExpression conditionalExpression;
-    Expression ifStep;
-    Expression elseStep;
+    private ConditionalExpression conditionalExpression;
+    private Expression ifStep;
+    private Expression elseStep;
 
     IfExpression(ConditionalExpression conditionalExpression, Expression ifStep, Expression elseStep) {
         this.conditionalExpression = conditionalExpression;
@@ -21,17 +22,19 @@ public class IfExpression extends Expression {
     @Override
     Expression execute() {
         // Assign the field 'value' to the expression that are going to be returned
-        if ((boolean) conditionalExpression.getValue())
+        if ((boolean) conditionalExpression.getValue()) {
             return ifStep;
-        else
+        } else {
             return elseStep;
+        }
     }
 
     @Override
     public String toString() {
-        if (conditionalExpression == null || ifStep == null || elseStep == null)
+        if (conditionalExpression == null || ifStep == null || elseStep == null) {
             return "??Inexpressible " + getClass().getName() + " result due to null value??";
-        
+        }
+
         return "if(" + conditionalExpression.toString() + ") { " + ifStep.toString() + " } else { " + elseStep.toString() + " }";
     }
 }

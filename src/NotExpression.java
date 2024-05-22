@@ -1,6 +1,7 @@
 
 public class NotExpression extends LogicalExpression {
-    Expression value;
+
+    private Expression value;
 
     NotExpression(Expression value) {
         this.value = value;
@@ -14,21 +15,24 @@ public class NotExpression extends LogicalExpression {
     @Override
     Expression execute() {
         try {
-            return new IfExpression(new ConditionalExpression(value, new StringLiteral("BooleanLiteral"), ConditionalOperator.InstanceOf),
-            new BooleanLiteral(!(boolean) value.getValue()), new ExceptionExpression("NotExpression", new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ")));
+            //Here the types of expression is checked.If expression's type is not a boolean, exception is thrown
+            if (value.getValue() instanceof Boolean) {
+                //If expression's type is a boolean, we return by taking the opposite of the boolean
+                return new BooleanLiteral(!(Boolean) value.getValue());
+            } else {
+                throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
+            }
         } catch (Exception e) {
             System.out.println(getClass().getSimpleName() + " " + e);
         }
         return new StringLiteral("");
     }
-
+    
     @Override
     public String toString() {
         if (value.getValue() instanceof Boolean) {
             return "(" + getValue() + ")";
         }
-        return "**Inexpressible " + getClass().getName() + " result** " +execute();
-
+        return "**Inexpressible " + getClass().getName() + " result** " + execute();
     }
-
 }

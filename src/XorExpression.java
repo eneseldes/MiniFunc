@@ -1,7 +1,8 @@
 
 public class XorExpression extends LogicalExpression {
-    Expression x1;
-    Expression x2;
+
+    private Expression x1;
+    private Expression x2;
 
     XorExpression(Expression x1, Expression x2) {
         this.x1 = x1;
@@ -16,10 +17,13 @@ public class XorExpression extends LogicalExpression {
     @Override
     Expression execute() {
         try {
+            //Here the types of expressions are checked.If expressions' types are not a boolean, exception is thrown
             if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
+                //If their values are same false is returned
                 if (x1.getValue() == x2.getValue()) {
                     return new BooleanLiteral(false);
                 }
+                //If it is not true is returned
                 return new BooleanLiteral(true);
             } else {
                 throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
@@ -35,7 +39,6 @@ public class XorExpression extends LogicalExpression {
         if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
             return "( " + x1 + " xor " + x2 + " )";
         }
-        return "**Inexpressible " + getClass().getName() + " result** " +execute();
+        return "**Inexpressible " + getClass().getName() + " result** " + execute();
     }
-
 }

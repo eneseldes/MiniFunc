@@ -10,13 +10,12 @@ public class MiniFuncTest {
         TestCases.logicalExpression();
         TestCases.conditionalExpression();
         TestCases.ifExpression();*/
-        
-        System.out.println( new OrExpression(new BooleanLiteral(true), new StringLiteral("false")));
-       
         /// student test cases
-        //StudentTestCases.testCase1();
-        //StudentTestCases.testCase2();
-        //StudentTestCases.testCase3();
+        StudentTestCases.testCase1();
+        StudentTestCases.testCase2();
+        StudentTestCases.testCase3();
+        StudentTestCases.testCase4();       
+        StudentTestCases.testCase5();
     }
 
 }
