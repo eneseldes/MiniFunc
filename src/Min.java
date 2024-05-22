@@ -28,8 +28,8 @@ public class Min extends Function {
             return null;
         }
         
-        return new IfExpression(
-                new ConditionalExpression(leftExpression, rightExpression, ConditionalOperator.LessEqual),
+        return new If(
+                new Condition(leftExpression, rightExpression, ConditionalOperator.LessEqual),
                 leftExpression, rightExpression);
     }
 

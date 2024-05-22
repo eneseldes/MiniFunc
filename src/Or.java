@@ -1,10 +1,10 @@
 
-public class OrExpression extends LogicalExpression {
+public class Or extends LogicalExpression {
 
     private Expression x1;
     private Expression x2;
 
-    OrExpression(Expression x1, Expression x2) {
+    Or(Expression x1, Expression x2) {
         this.x1 = x1;
         this.x2 = x2;
     }

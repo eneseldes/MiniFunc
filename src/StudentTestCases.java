@@ -75,12 +75,12 @@ public class StudentTestCases {
             going to use this value in another Expression while calculating 
             final interest rate
          */
-        Expression rawInterestRate = new IfExpression(new ConditionalExpression(loanAmount, new IntegerLiteral(breakPoints[0]), ConditionalOperator.Less), new DoubleLiteral(interestRates[0]),
-                new IfExpression(new ConditionalExpression(loanAmount, new IntegerLiteral(breakPoints[1]), ConditionalOperator.Less), new DoubleLiteral(interestRates[0]),
+        Expression rawInterestRate = new If(new Condition(loanAmount, new IntegerLiteral(breakPoints[0]), ConditionalOperator.Less), new DoubleLiteral(interestRates[0]),
+                new If(new Condition(loanAmount, new IntegerLiteral(breakPoints[1]), ConditionalOperator.Less), new DoubleLiteral(interestRates[0]),
                         new DoubleLiteral(interestRates[2]))).execute();
 
         // Find final interest rate based on whether client is reliable or not
-        Number finalInterestRate = (Number) new IfExpression(new ConditionalExpression(isReliable, new BooleanLiteral(true), ConditionalOperator.Equal),
+        Number finalInterestRate = (Number) new If(new Condition(isReliable, new BooleanLiteral(true), ConditionalOperator.Equal),
                 new Subtraction(rawInterestRate, new DoubleLiteral(0.23)),
                 new Addition(rawInterestRate, new DoubleLiteral(12.4)))
                 .getValue();
@@ -141,15 +141,15 @@ public class StudentTestCases {
         System.out.println("QUESTION: A=1 B=0, ((AB) + B)' + (A'B + AB')= ? ");
         BooleanLiteral a = new BooleanLiteral(true);
         BooleanLiteral b = new BooleanLiteral(false);
-        BooleanLiteral ab = new BooleanLiteral((Boolean)new AndExpression(a,b).getValue());
+        BooleanLiteral ab = new BooleanLiteral((Boolean)new And(a,b).getValue());
         System.out.println("Firstly, AB means is  A AND B , so A and B is -->" +ab );
-        BooleanLiteral abOrB = new BooleanLiteral((Boolean)new OrExpression(ab, b).getValue()); 
+        BooleanLiteral abOrB = new BooleanLiteral((Boolean)new Or(ab, b).getValue()); 
         System.out.println("Then AB + B means is AB OR B, AB--> " +ab +", B-->"+b +", AB OR B --> " +abOrB);
-        BooleanLiteral abOrBNot = new BooleanLiteral((Boolean) new NotExpression(abOrB).getValue());
+        BooleanLiteral abOrBNot = new BooleanLiteral((Boolean) new Not(abOrB).getValue());
         System.out.println("And ' means is NOT gate so (AB + B)' is --> " +abOrBNot);
-        BooleanLiteral aXorB = new BooleanLiteral((Boolean) new XorExpression(a,b).getValue());
+        BooleanLiteral aXorB = new BooleanLiteral((Boolean) new Xor(a,b).getValue());
         System.out.println("In the second part (A'B + AB') means is A XOR B, so A XOR B --> " +aXorB);
-        BooleanLiteral result = new BooleanLiteral((Boolean) new OrExpression(abOrBNot, aXorB).getValue());
+        BooleanLiteral result = new BooleanLiteral((Boolean) new Or(abOrBNot, aXorB).getValue());
         System.out.println("Finally, ((AB) + B)' + (A'B + AB')--> " +result);
         
         System.out.println();
@@ -166,9 +166,9 @@ public class StudentTestCases {
         System.out.println("a) n=" +n +" and (n-3)!= " +fac.getValue());
         Expression fib = new Fibonacci(n);
         System.out.println("b) nth term of Fibonacci = " +fib.getValue());
-        Expression prime = new PrimeNumber(n);
-        Expression prime2 = new PrimeNumber(new IntegerLiteral((Integer)new Subtraction(n, new IntegerLiteral(1)).getValue()));
-        Expression prime3 = new PrimeNumber(new IntegerLiteral((Integer)new Addition(n, new IntegerLiteral(1)).getValue()));
+        Expression prime = new IsPrime(n);
+        Expression prime2 = new IsPrime(new IntegerLiteral((Integer)new Subtraction(n, new IntegerLiteral(1)).getValue()));
+        Expression prime3 = new IsPrime(new IntegerLiteral((Integer)new Addition(n, new IntegerLiteral(1)).getValue()));
         System.out.println("c) " + prime.getValue() +" According to this answer we should find the closest prime number. Firstly we should look at the n+1 and n-1, " +prime2 +" " +prime3);
         
         System.out.println();

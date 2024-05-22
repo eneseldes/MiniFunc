@@ -28,8 +28,8 @@ public class Max extends Function {
             return null;
         }
 
-        return new IfExpression(
-                new ConditionalExpression(leftExpression, rightExpression, ConditionalOperator.GreaterEqual),
+        return new If(
+                new Condition(leftExpression, rightExpression, ConditionalOperator.GreaterEqual),
                 leftExpression, rightExpression);
     }
 

@@ -1,12 +1,12 @@
 
-public class IfExpression extends Expression {
+public class If extends Expression {
 
     // Condition and expressions that are going to be returned according to condition
-    private ConditionalExpression conditionalExpression;
+    private Condition conditionalExpression;
     private Expression ifStep;
     private Expression elseStep;
 
-    IfExpression(ConditionalExpression conditionalExpression, Expression ifStep, Expression elseStep) {
+    If(Condition conditionalExpression, Expression ifStep, Expression elseStep) {
         this.conditionalExpression = conditionalExpression;
         this.ifStep = ifStep;
         this.elseStep = elseStep;

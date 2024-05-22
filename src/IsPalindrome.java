@@ -30,10 +30,10 @@ public class IsPalindrome extends Function {
             IntegerVariable right = new IntegerVariable("right", 
                     (int) new Subtraction(new IntegerLiteral(((String)sentence.getValue()).length()), new IntegerLiteral(1)).getValue());
             
-            while((boolean)new ConditionalExpression(left, right, ConditionalOperator.Less).getValue()){
+            while((boolean)new Condition(left, right, ConditionalOperator.Less).getValue()){
                 CharacterLiteral leftLetter = new CharacterLiteral(((String)sentence.getValue()).charAt((int)left.getValue()));
                 CharacterLiteral rightLetter = new CharacterLiteral(((String)sentence.getValue()).charAt((int)right.getValue()));
-                if (!(boolean)new ConditionalExpression(leftLetter, rightLetter, ConditionalOperator.Equal).getValue()) {
+                if (!(boolean)new Condition(leftLetter, rightLetter, ConditionalOperator.Equal).getValue()) {
                     return new BooleanLiteral(false);
                 }
                 left.assign((int)new Addition(left, new IntegerLiteral(1)).getValue());
@@ -53,13 +53,13 @@ public class IsPalindrome extends Function {
             IntegerVariable reversedNumber = new IntegerVariable("reversedNumber", 0);
             IntegerVariable digit = new IntegerVariable("digit", 0);
             
-            while((boolean)new ConditionalExpression(number, new IntegerLiteral(0), ConditionalOperator.NotEqual).getValue()){
+            while((boolean)new Condition(number, new IntegerLiteral(0), ConditionalOperator.NotEqual).getValue()){
                 digit.assign((Number) new Modulo(number, new IntegerLiteral(10)).getValue());
                 reversedNumber.assign((Number) new Addition(new Multipication(reversedNumber, new IntegerLiteral(10)), digit).getValue());
                 number.assign((Number) new Division(number, new IntegerLiteral(10)).getValue());
             }
             
-            return new ConditionalExpression(expression, reversedNumber, ConditionalOperator.Equal);
+            return new Condition(expression, reversedNumber, ConditionalOperator.Equal);
         }
         
         System.out.println("Encountered improper expression on " + getClass().getSimpleName() + " operation. Enter an Integer value!"); 

@@ -1,5 +1,5 @@
 
-public class TestCases {
+public class GivenTestCases {
     
     static void literalTests() {
         System.out.println("literalTests()");
@@ -85,12 +85,12 @@ public class TestCases {
         Expression b1 = new BooleanLiteral(true);
         Expression b2 = new BooleanVariable("b2", false);
         System.out.println(b2 + " = " + b2.getValue());
-        System.out.println("not(" + b1 + ") = " + new NotExpression(b1).execute());
-        System.out.println(b1 + " and " + b2 + " = " + new AndExpression(b1, b2).getValue());
-        System.out.println(b1 + " and not(" + b2 + ") = " + new AndExpression(b1, new NotExpression(b2)).getValue());
-        System.out.println(b1 + " or " + b2 + " = " + new OrExpression(b1, b2).getValue());
-        System.out.println(b1 + " xor " + b2 + " = " + new XorExpression(b1, b2).getValue());
-        System.out.println(b1 + " xor not(" + b2 + ") = " + new XorExpression(b1, new NotExpression(b2)).getValue());
+        System.out.println("not(" + b1 + ") = " + new Not(b1).execute());
+        System.out.println(b1 + " and " + b2 + " = " + new And(b1, b2).getValue());
+        System.out.println(b1 + " and not(" + b2 + ") = " + new And(b1, new Not(b2)).getValue());
+        System.out.println(b1 + " or " + b2 + " = " + new Or(b1, b2).getValue());
+        System.out.println(b1 + " xor " + b2 + " = " + new Xor(b1, b2).getValue());
+        System.out.println(b1 + " xor not(" + b2 + ") = " + new Xor(b1, new Not(b2)).getValue());
 
         System.out.println();
     }
@@ -106,9 +106,9 @@ public class TestCases {
         ConditionalOperator equalOp = ConditionalOperator.Equal;
 
         System.out.println(x2 + " = " + x2.getValue());
-        System.out.println(x1 + " " + lessOp + " " + x2 + " = " + new ConditionalExpression(x1, x2, lessOp).getValue());
-        System.out.println(x1 + " " + equalOp + " " + x2 + " = " + new ConditionalExpression(x1, x2, equalOp).getValue());
-        System.out.println(two + "*" + x1 + " " + equalOp + " " + x2 + " = " + new ConditionalExpression(new Multipication(two, x1), x2, equalOp).getValue());
+        System.out.println(x1 + " " + lessOp + " " + x2 + " = " + new Condition(x1, x2, lessOp).getValue());
+        System.out.println(x1 + " " + equalOp + " " + x2 + " = " + new Condition(x1, x2, equalOp).getValue());
+        System.out.println(two + "*" + x1 + " " + equalOp + " " + x2 + " = " + new Condition(new Multipication(two, x1), x2, equalOp).getValue());
     }
 
     static void ifExpression() {
@@ -119,15 +119,15 @@ public class TestCases {
         Expression x2 = new IntegerVariable("x2", 10);
         ConditionalOperator lessOp = ConditionalOperator.Less;
         ConditionalOperator equalOp = ConditionalOperator.Equal;
-        ConditionalExpression lop = new ConditionalExpression(x1, x2, lessOp);
-        ConditionalExpression nep = new ConditionalExpression(x1, x2, equalOp);
+        Condition lop = new Condition(x1, x2, lessOp);
+        Condition nep = new Condition(x1, x2, equalOp);
 
         System.out.println(x2 + " = " + x2.getValue());
 
-        Expression ifExpression1 = new IfExpression(lop, x1, new Negation(x2));
+        Expression ifExpression1 = new If(lop, x1, new Negation(x2));
         System.out.println(ifExpression1 + " --> " + ifExpression1.getValue());
 
-        Expression ifExpression2 = new IfExpression(nep, x1, new Negation(x2));
+        Expression ifExpression2 = new If(nep, x1, new Negation(x2));
         System.out.println(ifExpression2 + " --> " + ifExpression2.getValue());
 
         System.out.println();

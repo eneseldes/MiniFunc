@@ -1,10 +1,10 @@
 
-public class XorExpression extends LogicalExpression {
+public class And extends LogicalExpression {
 
     private Expression x1;
     private Expression x2;
 
-    XorExpression(Expression x1, Expression x2) {
+    And(Expression x1, Expression x2) {
         this.x1 = x1;
         this.x2 = x2;
     }
@@ -17,14 +17,12 @@ public class XorExpression extends LogicalExpression {
     @Override
     Expression execute() {
         try {
-            //Here the types of expressions are checked.If expressions' types are not a boolean, exception is thrown
-            if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-                //If their values are same false is returned
-                if (x1.getValue() == x2.getValue()) {
-                    return new BooleanLiteral(false);
-                }
-                //If it is not true is returned
-                return new BooleanLiteral(true);
+            //First, we check the type of expressions here. If it is not BooleanLiteral or BooleanVariable exception is thrown. 
+            if (x1 == null || x2 == null) {
+                throw new NullPointerException(" An expression is null!! ");
+            } else if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
+                //Here if it is a Boolean, And gate process is done and returned as a BooleanLiteral.
+                return new BooleanLiteral((boolean) x1.getValue() && (boolean) x2.getValue());
             } else {
                 throw new IllegalArgumentException(" Invalid type of expression entered. Enter a boolean!! ");
             }
@@ -37,7 +35,7 @@ public class XorExpression extends LogicalExpression {
     @Override
     public String toString() {
         if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean) {
-            return "( " + x1 + " xor " + x2 + " )";
+            return "( " + x1 + " and " + x2 + " )";
         }
         return "**Inexpressible " + getClass().getName() + " result** " + execute();
     }

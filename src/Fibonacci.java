@@ -42,11 +42,11 @@ public class Fibonacci extends Function {
                     //If expression's  value is a double number,like 4.2 ,exception is thrown
                     throw new IllegalArgumentException(" Invalid type of expression entered. Enter a Integer!! ");
                 } //We checked is termInt < 1?. If it is true exception is thrown
-                else if ((Boolean) new ConditionalExpression(new IntegerLiteral(termInt), new IntegerLiteral(1), ConditionalOperator.Less).getValue()) {
+                else if ((Boolean) new Condition(new IntegerLiteral(termInt), new IntegerLiteral(1), ConditionalOperator.Less).getValue()) {
                     throw new IllegalArgumentException(" Enter a positive number!!");
                 }
                 //We checked is termInt - 1 < 1?. If it is true new Fibonacci is returned. We counts term until term -1 = 1 
-                if ((Boolean) new ConditionalExpression(new Subtraction(new IntegerLiteral(termInt), new IntegerLiteral(1)), new IntegerLiteral(1), ConditionalOperator.Greater).getValue()) {
+                if ((Boolean) new Condition(new Subtraction(new IntegerLiteral(termInt), new IntegerLiteral(1)), new IntegerLiteral(1), ConditionalOperator.Greater).getValue()) {
                     return new Fibonacci(secondTerm, (Integer) new Addition(new IntegerLiteral(firstTerm),
                             new IntegerLiteral(secondTerm)).getValue(), (Integer) new Subtraction(new IntegerLiteral(termInt), new IntegerLiteral(1)).getValue(),
                             term, fibonacciList).execute();

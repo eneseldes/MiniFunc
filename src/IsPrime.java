@@ -1,19 +1,19 @@
 
-public class PrimeNumber extends Function {
+public class IsPrime extends Function {
 
     private Expression number;
     private Integer divisor = 2;
     private Boolean isPrime;
     private Double numberDouble;
 
-    PrimeNumber(Expression number) {
+    IsPrime(Expression number) {
         this.number = number;
         if (number.getValue() instanceof Number) {
             numberDouble = ((Number) number.getValue()).doubleValue();
         }
     }
 
-    private PrimeNumber(Double numberDouble, Integer divisor, Expression number) {
+    private IsPrime(Double numberDouble, Integer divisor, Expression number) {
         //This constructor is being used to do recursion
         this.number = number;
         this.divisor = divisor;
@@ -35,17 +35,17 @@ public class PrimeNumber extends Function {
                     return new BooleanLiteral(false);
                 }
                 //We check if divisor is smaller than the number
-                if ((Boolean) new ConditionalExpression(new IntegerLiteral(divisor), new DoubleLiteral(numberDouble), ConditionalOperator.Less).getValue()) {
+                if ((Boolean) new Condition(new IntegerLiteral(divisor), new DoubleLiteral(numberDouble), ConditionalOperator.Less).getValue()) {
                     //If the remainder is equal to 0, it means that it is not the prime number, so we return false
                     if (numberDouble % divisor == 0) {
                         return new BooleanLiteral(false);
                     } //If it is not we return new Prime Number
                     else {
-                        return new PrimeNumber(numberDouble, (Integer) new Addition(new DoubleLiteral(divisor),
+                        return new IsPrime(numberDouble, (Integer) new Addition(new DoubleLiteral(divisor),
                                 new DoubleLiteral(1.0)).getValue(), number).execute();
                     }
                 } //We checked here if the number is less equal than 1 so it is not prime number
-                else if ((Boolean) new ConditionalExpression(new DoubleLiteral(numberDouble), new IntegerLiteral(1), ConditionalOperator.LessEqual).getValue()) {
+                else if ((Boolean) new Condition(new DoubleLiteral(numberDouble), new IntegerLiteral(1), ConditionalOperator.LessEqual).getValue()) {
                     return new BooleanLiteral(false);
                 }
                 return new BooleanLiteral(true);

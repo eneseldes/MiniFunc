@@ -1,5 +1,5 @@
 
-public class ConditionalExpression extends Expression {
+public class Condition extends Expression {
 
     private Expression x1;
     private Expression x2;
@@ -7,7 +7,7 @@ public class ConditionalExpression extends Expression {
     private Number b;
     private ConditionalOperator op;
 
-    ConditionalExpression(Expression x1, Expression x2, ConditionalOperator op) {
+    Condition(Expression x1, Expression x2, ConditionalOperator op) {
         this.x1 = x1;
         this.x2 = x2;
         this.op = op;

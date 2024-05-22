@@ -22,9 +22,9 @@ public class Factorial extends Function {
                 if (number < 0) {
                     throw new IllegalArgumentException(" Enter a positive number!!");
                     //Here the types of expression is checked.If expression's value is a integer number, program will continue
-                } else if ((Boolean) new ConditionalExpression(new Modulo(new IntegerLiteral(number), new IntegerLiteral(1)), new IntegerLiteral(0), ConditionalOperator.Equal).getValue()) {
+                } else if ((Boolean) new Condition(new Modulo(new IntegerLiteral(number), new IntegerLiteral(1)), new IntegerLiteral(0), ConditionalOperator.Equal).getValue()) {
                     //If number > 1 new Factorial is returned and multiply with expression's value
-                    if ((boolean) new ConditionalExpression(new IntegerLiteral(number), new IntegerLiteral(1), ConditionalOperator.Greater).getValue()) {
+                    if ((boolean) new Condition(new IntegerLiteral(number), new IntegerLiteral(1), ConditionalOperator.Greater).getValue()) {
                         return new Multipication(expression, new Factorial(new IntegerLiteral(number - 1))).execute();
                     }//If number = 1, 1 is returned 
                     else {

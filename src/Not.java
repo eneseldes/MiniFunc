@@ -1,9 +1,9 @@
 
-public class NotExpression extends LogicalExpression {
+public class Not extends LogicalExpression {
 
     private Expression value;
 
-    NotExpression(Expression value) {
+    Not(Expression value) {
         this.value = value;
     }
 
