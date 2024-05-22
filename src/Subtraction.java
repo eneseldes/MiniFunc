@@ -1,8 +1,8 @@
 
 // Check Addition.java for comments
-public class Substraction extends ArithmeticBinaryExpression {
+public class Subtraction extends ArithmeticBinaryExpression {
 
-    Substraction(Expression leftExpression, Expression rightExpression) {
+    Subtraction(Expression leftExpression, Expression rightExpression) {
         super(leftExpression, rightExpression);
     }
 
