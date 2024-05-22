@@ -41,10 +41,10 @@ public class Absolute extends ArithmeticUnaryExpression {
             return "??Inexpressible " + getClass().getName() + " result due to null value??";
         }
         if (!(expression.getValue() instanceof Number)) {
-            return "((Improper Calculation Here...) -" + expression.toString() + ")";
+            return "|(Improper Calculation Here...)" + expression.toString() + "|";
         }
         
-        return "(-" + expression.toString() + ")";
+        return "|" + expression.toString() + "|";
     }
 
 }

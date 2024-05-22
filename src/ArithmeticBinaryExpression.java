@@ -1,8 +1,8 @@
 
 public abstract class ArithmeticBinaryExpression extends ArithmeticExpression {
 
-    Expression leftExpression;
-    Expression rightExpression;
+    protected Expression leftExpression;
+    protected Expression rightExpression;
 
     public ArithmeticBinaryExpression(Expression leftExpression, Expression rightExpression) {
         this.leftExpression = leftExpression;
