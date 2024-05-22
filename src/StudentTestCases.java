@@ -1,7 +1,7 @@
 
 public class StudentTestCases {
 
-    static void testCase1(){
+    static void physicsQuestion(){
         System.out.println("Test Case 1 --> A Physics Question");
         System.out.println("----------------------------------");
         
@@ -26,7 +26,7 @@ public class StudentTestCases {
         System.out.println();
     }
     
-    static void testCase2() {
+    static void loanCalculation() {
         System.out.println("Test Case 2 --> Loan Calculation");
         System.out.println("----------------------------------");
         
@@ -62,8 +62,8 @@ public class StudentTestCases {
         System.out.println();
     }
 
-    // method of testCase2()
-    static double getInterestRate(Object[] person) {
+    // method of loanCalculation()
+    private static double getInterestRate(Object[] person) {
         int[] breakPoints = {2000, 5500, 8000};
         double[] interestRates = {1.2, 1.4, 1.6};
         
@@ -81,38 +81,40 @@ public class StudentTestCases {
 
         // Find final interest rate based on whether client is reliable or not
         Number finalInterestRate = (Number) new IfExpression(new ConditionalExpression(isReliable, new BooleanLiteral(true), ConditionalOperator.Equal),
-                new Substraction(rawInterestRate, new DoubleLiteral(0.23)),
+                new Subtraction(rawInterestRate, new DoubleLiteral(0.23)),
                 new Addition(rawInterestRate, new DoubleLiteral(12.4)))
                 .getValue();
 
         return finalInterestRate.doubleValue();
     }
     
-    //method of testCase2()
-    static double getRefundAmount(Object[] person){
+    //method of loanCalculation()
+    private static double getRefundAmount(Object[] person){
         Expression loanAmount = new DoubleLiteral((int) person[1]);
         Expression interestRate = new DoubleLiteral(getInterestRate(person));
         
         return ((Number)new Multipication(loanAmount, interestRate).getValue()).doubleValue();
     }
     
-    static void testCase3(){
-        System.out.println("Test Case 3 --> Exception Handling");
-        System.out.println("----------------------------------");
+    static void arithmeticExpressions(){
+        System.out.println("Test Case 3 --> Arithmetic Expressions And Exception Handling");
+        System.out.println("-------------------------------------------------------------");
         
         Expression num1 = new IntegerLiteral(25);
         Expression num2 = new DoubleLiteral(0.5);
+        Expression num3 = new IntegerLiteral(2);
         Expression bool = new BooleanLiteral(true);
         Expression sentence = new StringLiteral("ceng114");
         Expression nullValue = null;
         
         Expression correctResult1 = new Power(num1, num2);
         System.out.println(correctResult1 + " = " + correctResult1.getValue());
-        
-        System.out.println();
-        
         Expression correctResult2 = new Addition(num1, sentence);
         System.out.println(correctResult2 + " = " + correctResult2.getValue());
+        Expression correctResult3 = new Modulo(num1, num3);
+        System.out.println(correctResult3 + " = " + correctResult3.getValue());
+        Expression correctResult4 = new Absolute(new Subtraction(new Negation(correctResult1), new Power(num3, correctResult3)));
+        System.out.println(correctResult4 + " = " + correctResult4.getValue());
         
         System.out.println();
         
@@ -132,7 +134,7 @@ public class StudentTestCases {
         
         System.out.println();
     }
-    static void testCase4(){
+    static void logicalExpressions(){
         System.out.println("Test Case 4 --> Logic Expressions");
         System.out.println("---------------------------------");
         
@@ -149,24 +151,70 @@ public class StudentTestCases {
         System.out.println("In the second part (A'B + AB') means is A XOR B, so A XOR B --> " +aXorB);
         BooleanLiteral result = new BooleanLiteral((Boolean) new OrExpression(abOrBNot, aXorB).getValue());
         System.out.println("Finally, ((AB) + B)' + (A'B + AB')--> " +result);
-               
+        
+        System.out.println();
     }
     
-    static void testCase5(){
+    static void functionalExpressions1(){
         System.out.println("Test Case 5 --> Factorial, Prime Number and Fibonacci");
         System.out.println("-----------------------------------------------------");
         
         System.out.println("QUESTION: 132*n! = (n+2)*(n+1)*n*(n-1)! \n a) n=? and (n-3)!=? \n b) What is the nth term of Fibonacci serie \n c) Is n prime? If it is not find the closest prime number to n. ");
         Expression n = new IntegerLiteral(10);
         System.out.println("n*(n-1)! = n! so 132 = (n+2)*(n+1) According to this equation ");
-        Expression fac = new Factorial(new Substraction(n ,new IntegerLiteral(3)));       
+        Expression fac = new Factorial(new Subtraction(n ,new IntegerLiteral(3)));       
         System.out.println("a) n=" +n +" and (n-3)!= " +fac.getValue());
         Expression fib = new Fibonacci(n);
         System.out.println("b) nth term of Fibonacci = " +fib.getValue());
         Expression prime = new PrimeNumber(n);
-        Expression prime2 = new PrimeNumber(new IntegerLiteral((Integer)new Substraction(n, new IntegerLiteral(1)).getValue()));
+        Expression prime2 = new PrimeNumber(new IntegerLiteral((Integer)new Subtraction(n, new IntegerLiteral(1)).getValue()));
         Expression prime3 = new PrimeNumber(new IntegerLiteral((Integer)new Addition(n, new IntegerLiteral(1)).getValue()));
         System.out.println("c) " + prime.getValue() +" According to this answer we should find the closest prime number. Firstly we should look at the n+1 and n-1, " +prime2 +" " +prime3);
+        
+        System.out.println();
     }
     
+    static void functionalExpressions2(){
+        System.out.println("Test Case 6 --> Min - Max");
+        System.out.println("-------------------------");
+        
+        Expression num1 = new IntegerLiteral(5);
+        Expression num2 = new IntegerLiteral(2);
+        Expression num3 = new IntegerLiteral(999);
+        Expression num4 = new DoubleLiteral(15.7);
+        Function min = new Min(num1, num2);
+        Function max = new Max(num4, num3);
+        Function hybrid = new Max(min, max);
+        
+        System.out.println(min + " = " + min.getValue());
+        System.out.println(max + " = " + max.getValue());
+        System.out.println(hybrid + " = " + hybrid.getValue());
+        
+        System.out.println();
+    }
+    
+    static void functionalExpressions3(){
+        System.out.println("Test Case 7 --> Is Palindrome?");
+        System.out.println("------------------------------");
+        
+        StringLiteral s1 = new StringLiteral("ey edip adanada pide ye");
+        StringLiteral s2 = new StringLiteral("CENG114");
+        IntegerLiteral num1 = new IntegerLiteral(555);
+        IntegerLiteral num2 = new IntegerLiteral(249);
+        Expression add = new Addition(s1, new Addition(s2, new Addition(num1, num2)));
+        Function p1 = new IsPalindrome(s1);
+        Function p2 = new IsPalindrome(s2);
+        Function p3 = new IsPalindrome(num1);
+        Function p4 = new IsPalindrome(num2);
+        Function p5 = new IsPalindrome(add);
+        
+        System.out.println(p1 + " --> " + p1.getValue());
+        System.out.println(p2 + " --> " + p2.getValue());
+        System.out.println(p3 + " --> " + p3.getValue());
+        System.out.println(p4 + " --> " + p4.getValue());
+        System.out.println(p5 + " --> " + p5.getValue());
+        
+        System.out.println();
+        
+    }
 }

@@ -1,26 +1,10 @@
 
 public class TestCases {
-
-    private TestCases() {
-    }
-
+    
     static void literalTests() {
         System.out.println("literalTests()");
         System.out.println("--------------");
-        /*
-			str = "CENG114"
-			print(str)
-
-			x = 17
-			print(x)
-			
-			y = 3.5
-			print(y)	
-			
-			z = true
-			print(z)						
-         */
-
+        
         Literal str = StringLiteral.create("CENG114");
         System.out.println(str);
 
@@ -32,6 +16,9 @@ public class TestCases {
 
         Literal z = BooleanLiteral.create(true);
         System.out.println(z);
+        
+        Literal u = CharacterLiteral.create('e');
+        System.out.println(u);
 
         System.out.println();
     }
@@ -39,26 +26,7 @@ public class TestCases {
     static void variableTests() {
         System.out.println("variableTests()");
         System.out.println("---------------");
-        /*
-			str1 = "CENG117"
-			str2 = "CENG114"
-			print(str1)
-			print(str2)
-			
-			str2 = str1
-			print(str1)
-			print(str2)
-			
-			i = 4
-			print(i)
-			
-			d = 10.11 
-			print(d)
-			
-			b = false 
-			print(b)						
-         */
-
+        
         Variable str1 = StringVariable.create("str1", "CENG117");
         Variable str2 = StringVariable.create("str2", "CENG114");
         System.out.println(str1 + " = " + str1.getValue());
@@ -76,27 +44,20 @@ public class TestCases {
 
         Variable b = BooleanVariable.create("b", false);
         System.out.println(b + " = " + b.getValue());
-
+        
+        Variable char1 = CharacterVariable.create("char1", 'd');
+        System.out.println(char1 + " = " + char1.getValue());
+        
+        Variable char2 = CharacterVariable.create("char2", 'e');
+        System.out.println(char2 + " = " + char2.getValue());
+        
         System.out.println();
     }
 
     static void arithmeticExpressioTest() {
         System.out.println("arithmeticExpressioTest()");
         System.out.println("-------------------------");
-        /*
-		 	e2 = 7.5;
-		 	e3 = 4;
-		 	e4 = " is five"
-		 	5 + e2
-		 	5 + e3
-		 	5 + e4
-		 	e2 - e3
-		 	e2 * e3
-		 	e2 / 2.5
-		 	5 + (e2 / 2.5)
-		 	-e3
-         */
-
+        
         Expression e1 = new IntegerLiteral(5);
         Expression e2 = new DoubleVariable("e2", 7.5);
         Expression e3 = new IntegerVariable("e3", 4);
@@ -108,7 +69,7 @@ public class TestCases {
         System.out.println(e1 + " + " + e2 + " = " + new Addition(e1, e2).execute());
         System.out.println(e1 + " + " + e3 + " = " + new Addition(e1, e3).execute());
         System.out.println(e1 + " + " + e4 + " = " + new Addition(e1, e4).execute());
-        System.out.println(e2 + " - " + e3 + " = " + new Substraction(e2, e3).execute());
+        System.out.println(e2 + " - " + e3 + " = " + new Subtraction(e2, e3).execute());
         System.out.println(e2 + " * " + e3 + " = " + new Multipication(e2, e3).getValue());
         System.out.println(e2 + " / " + e5 + " = " + new Division(e2, e5).execute());
         System.out.println(e1 + " + (" + e2 + " / " + e5 + ") = " + new Addition(e1, new Division(e2, e5)).execute());
@@ -120,17 +81,7 @@ public class TestCases {
     static void logicalExpression() {
         System.out.println("logicalExpression()");
         System.out.println("-------------------");
-        /*
-		 	b1 = true
-		 	b2 = false;
-		 			 	
-		 	not(b1)
-		 	b1 and b2
-		 	b1 and not(b2)
-		 	b1 or b2
-		 	b1 xor b2
-		 	b1 xor not(b2)
-         */
+        
         Expression b1 = new BooleanLiteral(true);
         Expression b2 = new BooleanVariable("b2", false);
         System.out.println(b2 + " = " + b2.getValue());
@@ -147,14 +98,7 @@ public class TestCases {
     static void conditionalExpression() {
         System.out.println("conditionalExpression()");
         System.out.println("-----------------------");
-        /*
-		e1 = 5
-		e2 = 10
-		e1 < e2
-		e1 == e2
-		2*e1 == e2 
-         */
-
+        
         Expression two = new IntegerLiteral(2);
         Expression x1 = new IntegerLiteral(5);
         Expression x2 = new IntegerVariable("x2", 10);
@@ -170,20 +114,7 @@ public class TestCases {
     static void ifExpression() {
         System.out.println("ifExpression()");
         System.out.println("--------------");
-        /*
-			e1 = 5
-			e2 = 10
-			
-			if (e1 < e2)
-				e1
-			else
-				-e2
-				
-			if (e1 == e2)
-				e1
-			else
-				-e2				
-         */
+        
         Expression x1 = new IntegerLiteral(5);
         Expression x2 = new IntegerVariable("x2", 10);
         ConditionalOperator lessOp = ConditionalOperator.Less;
@@ -200,20 +131,6 @@ public class TestCases {
         System.out.println(ifExpression2 + " --> " + ifExpression2.getValue());
 
         System.out.println();
-    }
-
-    static void test999() {
-        /*
-			func add(x, y)
-			{
-				x + y
-			}
-			
-			IntegerLiteral x(5);
-			IntegerLiteral y(3);
-			print( add.execute(x, y) )
-         */
-
     }
 
 }
