@@ -22,10 +22,20 @@ public class Condition extends Expression {
     Expression execute() {
         try {
             //Here the types of expressions were checked. If their expressions types are not same or expressions are not number&string exception is thrown
-            if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean && op == ConditionalOperator.Equal)
-                return new BooleanLiteral(x1.getValue() == x2.getValue());
-            if (x1.getValue() instanceof Character && x2.getValue() instanceof Character && op == ConditionalOperator.Equal)
-                return new BooleanLiteral(x1.getValue() == x2.getValue());
+            if (op == ConditionalOperator.Equal) {
+                if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean)
+                    return new BooleanLiteral(x1.getValue() == x2.getValue());
+                if (x1.getValue() instanceof Character && x2.getValue() instanceof Character)
+                    return new BooleanLiteral(x1.getValue() == x2.getValue());
+            }
+            
+            if (op == ConditionalOperator.NotEqual) {
+                if (x1.getValue() instanceof Boolean && x2.getValue() instanceof Boolean)
+                    return new BooleanLiteral(x1.getValue() != x2.getValue());
+                if (x1.getValue() instanceof Character && x2.getValue() instanceof Character)
+                    return new BooleanLiteral(x1.getValue() != x2.getValue());
+            }
+            
             
             if (x1.getValue() instanceof Number) {
                 if (x2.getValue() instanceof Number) {

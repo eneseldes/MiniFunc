@@ -25,24 +25,31 @@ public class IsPalindrome extends Function {
         } 
         
         if (expression.getValue() instanceof String) {
+            // Get value as string and initialize 0 and sentence.length() - 1 indexes
             StringLiteral sentence = new StringLiteral((String)expression.getValue());
-            IntegerVariable left = new IntegerVariable("left", 0);
-            IntegerVariable right = new IntegerVariable("right", 
+            IntegerVariable leftIndex = new IntegerVariable("left", 0);
+            IntegerVariable rightIndex = new IntegerVariable("right", 
                     (int) new Subtraction(new IntegerLiteral(((String)sentence.getValue()).length()), new IntegerLiteral(1)).getValue());
             
-            while((boolean)new Condition(left, right, ConditionalOperator.Less).getValue()){
-                CharacterLiteral leftLetter = new CharacterLiteral(((String)sentence.getValue()).charAt((int)left.getValue()));
-                CharacterLiteral rightLetter = new CharacterLiteral(((String)sentence.getValue()).charAt((int)right.getValue()));
-                if (!(boolean)new Condition(leftLetter, rightLetter, ConditionalOperator.Equal).getValue()) {
+            while((boolean)new Condition(leftIndex, rightIndex, ConditionalOperator.Less).getValue()){
+                // Get letters at indexes leftIndex and rightIndex
+                CharacterLiteral leftLetter = new CharacterLiteral(((String)sentence.getValue()).charAt((int)leftIndex.getValue()));
+                CharacterLiteral rightLetter = new CharacterLiteral(((String)sentence.getValue()).charAt((int)rightIndex.getValue()));
+                
+                // If letters on the left and right are not equal, return false
+                if ((boolean)new Condition(leftLetter, rightLetter, ConditionalOperator.NotEqual).getValue()) {
                     return new BooleanLiteral(false);
                 }
-                left.assign((int)new Addition(left, new IntegerLiteral(1)).getValue());
-                right.assign((int)new Subtraction(right, new IntegerLiteral(1)).getValue());
+                
+                // Increase leftIndex, decrease rightIndex
+                leftIndex.assign((int)new Addition(leftIndex, new IntegerLiteral(1)).getValue());
+                rightIndex.assign((int)new Subtraction(rightIndex, new IntegerLiteral(1)).getValue());
             }
             
             return new BooleanLiteral(true);
         }
         
+        // Input can not be a double value
         if (expression.getValue() instanceof Double) {
             System.out.println("Encountered double expression on " + getClass().getSimpleName() + " operation. Enter an Integer value!");
             return null;
@@ -52,13 +59,17 @@ public class IsPalindrome extends Function {
             IntegerVariable number = new IntegerVariable("number", (Integer)expression.getValue());
             IntegerVariable reversedNumber = new IntegerVariable("reversedNumber", 0);
             IntegerVariable digit = new IntegerVariable("digit", 0);
-            
+
             while((boolean)new Condition(number, new IntegerLiteral(0), ConditionalOperator.NotEqual).getValue()){
+                // Get last digit of the 'number'
                 digit.assign((Number) new Modulo(number, new IntegerLiteral(10)).getValue());
+                // Add digit at the end of 'reversedNumber'. (by multiplying reversedNumber by 10 in every iteration as below))
                 reversedNumber.assign((Number) new Addition(new Multipication(reversedNumber, new IntegerLiteral(10)), digit).getValue());
+                // Erase the last digit of the 'number' (by dividing number by 10 in every iteration as below))
                 number.assign((Number) new Division(number, new IntegerLiteral(10)).getValue());
             }
             
+            // If the original number is equal to reversedNumber, return true, else false
             return new Condition(expression, reversedNumber, ConditionalOperator.Equal);
         }
         

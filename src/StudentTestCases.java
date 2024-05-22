@@ -207,12 +207,17 @@ public class StudentTestCases {
         Function p3 = new IsPalindrome(num1);
         Function p4 = new IsPalindrome(num2);
         Function p5 = new IsPalindrome(add);
+        Function p6 = new IsPalindrome(new BooleanLiteral(true));
         
         System.out.println(p1 + " --> " + p1.getValue());
         System.out.println(p2 + " --> " + p2.getValue());
         System.out.println(p3 + " --> " + p3.getValue());
         System.out.println(p4 + " --> " + p4.getValue());
         System.out.println(p5 + " --> " + p5.getValue());
+        
+        System.out.println();
+        
+        System.out.println(p6 + " --> " + p6.getValue());
         
         System.out.println();
         
